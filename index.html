@@ -46,11 +46,19 @@ body{
   overflow:hidden;
 }
 
+.header .left{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  text-align:left;
+  margin-right:12px; /* jarak sama sticker */
+  max-width: calc(100% - 60px); /* space buat sticker */
+}
+
 .header h1{
   font-size:32px;
   color:var(--accent);
   margin:0 0 4px 0;
-  text-align:left;
 }
 
 .header p{
@@ -58,7 +66,9 @@ body{
   color:black;
   font-weight:bold;
   margin:0;
-  text-align:left;
+  white-space:normal;      /* wrap otomatis */
+  word-break:break-word;   /* pecah kata kalau perlu */
+  line-height:1.2;
 }
 
 .header .hdr-sticker{
@@ -74,6 +84,40 @@ body{
   width:100%; 
   height:100%; 
   object-fit:contain;
+}
+
+/* Responsif HP */
+@media (max-width:480px){
+  .header{
+    align-items:flex-start;  /* biar subjudul wrap ke bawah */
+    padding:6px;
+  }
+
+  .header .left{
+    max-width: calc(100% - 60px); /* sisain space buat sticker */
+  }
+
+  .header h1{
+    font-size:16px;  
+    margin:0 0 2px 0; 
+    line-height:1.2;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .header p{
+    font-size:12px;   
+    line-height:1.2;
+  }
+
+  .header .hdr-sticker{
+    width:50px; 
+    height:50px;
+    flex-shrink:0;
+    margin-left:0;
+    align-self:flex-start; /* tetap di kanan header */
+  }
 }
 
 /* Responsif HP */
@@ -332,6 +376,7 @@ window.addEventListener('load',()=>{runSequence();});
 </script>
 </body>
 </html>
+
 
 
 
