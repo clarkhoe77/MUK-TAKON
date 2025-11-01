@@ -267,7 +267,7 @@ const messages = [
   {who:'me', text:`Emang aku cenayang bisa tau isi pikiran kamu gimanaa?`},
   {who:'me', text:`Aku gak maksa kok, aku juga ngerti kalau orang bisa capek dan jenuh. Tapi aku juga gak suka cara ilangnya yang kayak gini.`},
   {who:'me', text:`Buat aku, ngomong langsung tuh jauh lebih enak daripada diem aja.`},
-  {who:'me', text:`Aku ngomong gini bukan karena baper dan kepo sama kehidupanmu blablabla. Aku cuma ngerasa nyambung dan positif aja ngobrol sama kamu. Kaya obrolan temen, kaya ke ralisha.`},
+  {who:'me', text:`Aku ngomong gini bukan karena baper dan kepo sama kehidupanmu blablabla. Aku cuma ngerasa nyambung. Masa tiba-tiba cut off? (aga lebay sih. Kecuali didiemin sebulan, TAPI GWAKH GABISA)`},
   {who:'me', text:`Maksudku lonn, yaa kalau kamu emang ngerasa “ah udah ah, ini kayaknya risih banget gue sama nih cewe,” bilang aja. Aku gak bakal sakit hati apalagi ngejar kamu. Aku orangnya sadar diri kok, tapi didiemin gini tuh yang gak enak.`},
   {who:'me', text:`Atau kalau kamu mikir “katanya biasa aja tapi kok nyariin dan minta penjelasan?” yaaa karena aku bingung, dan aku mau memecahkan ini kuis.`},
   {who:'me', text:`Dikira kuis  berhadiah apa yak, tapi ini dapet hikmahnya doang.`},
@@ -350,16 +350,17 @@ async function runSequence(){
     await showBubble(messages[i]);
     await new Promise(r=>setTimeout(r, Math.floor(Math.random()*1200)+800));
   }
-  // Sticker pop-up 2x
-  showStickerBubble('https://clarkhoe77.github.io/nyeri_heart.jpg');
-  await new Promise(r=>setTimeout(r,600));
-  showStickerBubble('https://clarkhoe77.github.io/udud_dulu.jpg');
+  // Sticker pop-up 2x (update URL)
+showStickerBubble('https://clarkhoe77.github.io/MUK-TAKON/nyeri_heart.jpg');
+await new Promise(r=>setTimeout(r,600));
+showStickerBubble('https://clarkhoe77.github.io/MUK-TAKON/udud_dulu.jpg');
 }
 
 window.addEventListener('load',()=>{runSequence();});
 </script>
 </body>
 </html>
+
 
 
 
