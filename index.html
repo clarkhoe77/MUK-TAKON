@@ -52,14 +52,14 @@ body{
   justify-content:center;
   text-align:left;
   margin-right:12px; 
-  max-width: calc(100% - 60px); /* space untuk sticker */
+  max-width: calc(100% - 60px); 
 }
 
 .header h1{
   font-size:32px;
   color:var(--accent);
   margin:0 0 4px 0;
-  font-weight: bold; /* BOLD */
+  font-weight: bold;
 }
 
 .header p{
@@ -104,7 +104,7 @@ body{
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
-    font-weight: bold; /* tetap bold di HP */
+    font-weight: bold; 
   }
 
   .header p{
@@ -259,7 +259,7 @@ const messages = [
   {who:'me', text:`Aku cuma ngerasa gak enak aja, kesannya kayak aku gak dihargain sebagai seonggok manusia, walaupun aslinya bidadari yahh.`},
   {who:'them', text:`hmmmm`},
   {who:'me', text:`Yuyur gwa kesel. Soalnya ini tuh rasanya kayak orang disuapin makan tiap hari, terus tiba-tiba yang nyuapin ilang gitu aja. Yaa aneh aja.`},
-  {who:'me', text:`Bukan karena aku baper. Aku gak munafik, aku emang suka dan enjoy sama suasana yang kamu kasih. Bukan dalam hal cinta-cintaan alay yaa, tapi aku ngerasa nyambung dan positif ngobrol sama kamu, kayak aku sama ralisha.`},
+  {who:'me', text:`Bukan karena aku baper. Aku gak munafik, aku emang suka dan enjoy sama suasana yang kamu kasih. Bukan dalam hal cinta cintaan alay yaa, tapi aku ngerasa nyambung dan positif ngobrol sama kamu, kayak aku sama ralisha.`},
   {who:'them', text:`yakinnn deckk`},
   {who:'me', text:`Aku cuma pengen tau, ketua kenapa ketua? Soalnya jujur aja, tiba-tiba ngilang gitu tuh bikin bingung. Kalau kamu gak nyaman, lagi ada masalah yang gabisa kamu omongin, atau ngerasa aku terlalu banyak ngomong, atau risih sama hal-hal yang aku lakuin (kurang ajarr tapi yaa bener juga sih), bilang aja gak papa.`},
   {who:'me', text:`Atau mungkin kamu ngerasa risih karena kamu pernah bilang “aku bingung kalo dipojokin gini marr, atau aku jadi gak enak sama kamu.”`},
@@ -267,7 +267,7 @@ const messages = [
   {who:'me', text:`Emang aku cenayang bisa tau isi pikiran kamu gimanaa?`},
   {who:'me', text:`Aku gak maksa kok, aku juga ngerti kalau orang bisa capek dan jenuh. Tapi aku juga gak suka cara ilangnya yang kayak gini.`},
   {who:'me', text:`Buat aku, ngomong langsung tuh jauh lebih enak daripada diem aja.`},
-  {who:'me', text:`Aku ngomong gini bukan karena baper dan pengen tau semua tentang kamu. Aku cuma ngerasa nyambung ngobrol sama kamu.`},
+  {who:'me', text:`Aku ngomong gini bukan karena baper dan kepo sama kehidupanmu blablabla. Aku cuma ngerasa nyambung dan positif aja ngobrol sama kamu. Kaya obrolan temen, kaya ke ralisha.`},
   {who:'me', text:`Maksudku lonn, yaa kalau kamu emang ngerasa “ah udah ah, ini kayaknya risih banget gue sama nih cewe,” bilang aja. Aku gak bakal sakit hati apalagi ngejar kamu. Aku orangnya sadar diri kok, tapi didiemin gini tuh yang gak enak.`},
   {who:'me', text:`Atau kalau kamu mikir “katanya biasa aja tapi kok nyariin dan minta penjelasan?” yaaa karena aku bingung, dan aku mau memecahkan ini kuis.`},
   {who:'me', text:`Dikira kuis  berhadiah apa yak, tapi ini dapet hikmahnya doang.`},
@@ -276,7 +276,7 @@ const messages = [
   {who:'me', text:`Ekhemm`},
   {who:'them', text:`ehh banyak benerr`},
   {who:'me', text:`KAMU GAPERLU NGERASA GA ENAK KE AKU KARENA AKU AJA GA ENAK NGOMONG GINII CUMAAAAAAA aku mau nyampein isi pikiranku, jadi feel free aja kalo mau menanggapi`},
-  {who:'me', text:`YAAH Chat sebelumnya diemin aja ya anjerr gausa dibales, tapi kalo yang ini ga dibales, bengkelmu aku bom.`},
+  {who:'me', text:`YAAH Chat sebelumnya diemin aja ya anjerr gausa dibales , tapi kalo yang ini ga dibales, bengkelmu aku bom.`},
   {who:'me', text:`Soalnya aku juga malu yaaaa jadi LAST CHAT, ohokk ohok ekhm. Yaa ini aku bersikap dewasa dan menurunkan gengsi makannya aku nanyaa`},
   {who:'me', text:`Kalo kamu males baca, intine wae boz, 'aku gasuka didiemin, aku mau tau kenapa gitu. Kalo gasuka bilang aja jangan merasa ga enak karena akupun ga enak ngomong gini. DAN JANGAN BALES CHATKU KALO TERPAKSA (tapii ya minimal bales kek anjer seleb, hp lu dicuri dek?)' dahh itu ajaa.`},
   {who:'me', text:`Sekian. Terima kasih.`}
@@ -312,19 +312,55 @@ async function typeWithPause(bubbleEl, text){
   }
 }
 
+async function showBubble(obj){
+  const bubble=createBubble(obj);
+  chatArea.appendChild(bubble);
+  playTuing();
+  bubble.classList.add('pop');
+  await new Promise(r=>setTimeout(r,100));
+  bubble.classList.add('show');
+  await typeWithPause(bubble,obj.text);
+}
+
+function showStickerBubble(url){
+  const d=document.createElement('div');
+  d.className='bubble me';
+  d.style.padding='6px';
+  d.style.maxWidth='120px';
+  d.style.height='120px';
+  d.style.background='rgba(0,0,0,0.2)';
+  d.style.border='2px solid var(--me-color)';
+  d.style.borderRadius='12px';
+  d.style.display='flex';
+  d.style.justifyContent='center';
+  d.style.alignItems='center';
+  d.style.overflow='hidden';
+  const img=document.createElement('img');
+  img.src=url;
+  img.style.width='100%';
+  img.style.height='100%';
+  img.style.objectFit='contain';
+  d.appendChild(img);
+  chatArea.appendChild(d);
+  d.scrollIntoView({behavior:'smooth', block:'end'});
+}
+
 async function runSequence(){
   for(let i=0;i<messages.length;i++){
-    const bubble=createBubble(messages[i]);
-    chatArea.appendChild(bubble);
-    await typeWithPause(bubble,messages[i].text);
+    await showBubble(messages[i]);
+    await new Promise(r=>setTimeout(r, Math.floor(Math.random()*1200)+800));
   }
-  playTuing();
+  // Sticker pop-up 2x
+  showStickerBubble('https://clarkhoe77.github.io/nyeri_heart.jpg');
+  await new Promise(r=>setTimeout(r,600));
+  showStickerBubble('https://clarkhoe77.github.io/udud_dulu.jpg');
 }
 
 window.addEventListener('load',()=>{runSequence();});
 </script>
 </body>
 </html>
+
 
 
 
