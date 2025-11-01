@@ -20,6 +20,7 @@ body{
   display:flex; justify-content:center; align-items:flex-start;
   min-height:100vh;
   padding:0; margin:0;
+  overflow-x:hidden;
 }
 
 .panel{
@@ -119,6 +120,19 @@ body{
     height:50px;
     flex-shrink:0;
     margin-left:0;
+  }
+
+  /* biar sticker bubble kelihatan penuh */
+  .bubble.me img {
+    max-height: 100px;
+  }
+
+  .chat-area {
+    padding-bottom: 150px;
+  }
+
+  .footer-gradient {
+    height: 100px;
   }
 }
 
@@ -276,6 +290,7 @@ const messages = [
   {who:'me', text:`Ekhemm`},
   {who:'them', text:`ehh banyak benerr`},
   {who:'me', text:`KAMU GAPERLU NGERASA GA ENAK KE AKU KARENA AKU AJA GA ENAK NGOMONG GINII CUMAAAAAAA aku mau nyampein isi pikiranku, jadi feel free aja kalo mau menanggapi`},
+  {who:'me', text:`Jadii yah temenku banyak, aku ga ketergantungan sama kamu. Cuma aku bukan tipe orang yang bisa cut off langsung kaya ga ada apa apa. Tapi kalo kamu mau, ya we're fine broww.`},
   {who:'me', text:`YAAH Chat sebelumnya diemin aja ya anjerr gausa dibales , tapi kalo yang ini ga dibales, bengkelmu aku bom.`},
   {who:'me', text:`Soalnya aku juga malu yaaaa jadi LAST CHAT, ohokk ohok ekhm. Yaa ini aku bersikap dewasa dan menurunkan gengsi makannya aku nanyaa`},
   {who:'me', text:`Kalo kamu males baca, intine wae boz, 'aku gasuka didiemin, aku mau tau kenapa gitu. Kalo gasuka bilang aja jangan merasa ga enak karena akupun ga enak ngomong gini. DAN JANGAN BALES CHATKU KALO TERPAKSA (tapii ya minimal bales kek anjer seleb, hp lu dicuri dek?)' dahh itu ajaa.`},
@@ -342,7 +357,12 @@ function showStickerBubble(url){
   img.style.objectFit='contain';
   d.appendChild(img);
   chatArea.appendChild(d);
-  d.scrollIntoView({behavior:'smooth', block:'end'});
+
+  // scroll kuat biar di HP pasti ke bawah
+  setTimeout(()=>{
+    d.scrollIntoView({behavior:'smooth', block:'end'});
+    window.scrollTo(0, document.body.scrollHeight);
+  }, 300);
 }
 
 async function runSequence(){
@@ -350,16 +370,18 @@ async function runSequence(){
     await showBubble(messages[i]);
     await new Promise(r=>setTimeout(r, Math.floor(Math.random()*1200)+800));
   }
-  // Sticker pop-up 2x (update URL)
-showStickerBubble('https://clarkhoe77.github.io/MUK-TAKON/nyeri_heart.jpg');
-await new Promise(r=>setTimeout(r,600));
-showStickerBubble('https://clarkhoe77.github.io/MUK-TAKON/udud_dulu.jpg');
+
+  showStickerBubble('https://clarkhoe77.github.io/MUK-TAKON/nyeri_heart.jpg');
+  await new Promise(r=>setTimeout(r,600));
+  showStickerBubble('https://clarkhoe77.github.io/MUK-TAKON/udud_dulu.jpg');
 }
 
 window.addEventListener('load',()=>{runSequence();});
 </script>
 </body>
 </html>
+
+
 
 
 
