@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>NANYA DOANG BUKAN NAKSIR BUKAN NGEDRAMA BUKAN SULAP BUKAN SIHIR</title>
+<title>NANYA DOANG BUKAN NAKSIR BUKAN NGEDRAMA BUKAN SULAP BUKAN SIHIR</title> 
 <link href="https://fonts.cdnfonts.com/css/cascadia-code" rel="stylesheet">
 <style>
 :root{
@@ -81,7 +81,7 @@ body{
   .header{
     flex-wrap:nowrap; /* jangan pecah baris */
     justify-content:space-between; /* judul di kiri/sticker di kanan */
-    align-items:center;
+    align-items:flex-start; /* biar subjudul bisa wrap ke bawah */
     padding:6px;
   }
 
@@ -90,13 +90,17 @@ body{
     flex-direction:column;
     justify-content:center;
     flex:1;
-    text-align:center; /* judul & subjudul di tengah */
+    text-align:left; /* judul & subjudul di kiri */
+    margin-right:12px; /* kasih jarak sama sticker */
   }
 
   .header h1{
     font-size:16px;  
     margin:0 0 2px 0; 
     line-height:1.2;
+    white-space:nowrap; /* judul tetap satu baris */
+    overflow:hidden;
+    text-overflow:ellipsis;
   }
 
   .header p{
@@ -111,8 +115,9 @@ body{
   .header .hdr-sticker{
     width:50px; 
     height:50px;
-    margin-left:12px; /* tetap di kanan */
+    margin-left:0; /* posisi sticker tetap di kanan */
     flex-shrink:0;
+    align-self:flex-start; /* biar tetap di kanan atas header */
   }
 }
 
@@ -327,6 +332,7 @@ window.addEventListener('load',()=>{runSequence();});
 </script>
 </body>
 </html>
+
 
 
 
