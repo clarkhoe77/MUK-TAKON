@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>NANYA DOANG BUKAN NAKSIR BUKAN NGEDRAMA BUKAN SULAP BUKAN SIHIR</title> 
+<title>NANYA DOANG BUKAN NAKSIR BUKAN NGEDRAMA BUKAN SULAP BUKAN SIHIR</title>
 <link href="https://fonts.cdnfonts.com/css/cascadia-code" rel="stylesheet">
 <style>
 :root{
@@ -51,8 +51,8 @@ body{
   flex-direction:column;
   justify-content:center;
   text-align:left;
-  margin-right:12px; /* jarak sama sticker */
-  max-width: calc(100% - 60px); /* space buat sticker */
+  margin-right:12px; 
+  max-width: calc(100% - 60px); /* space untuk sticker */
 }
 
 .header h1{
@@ -66,8 +66,8 @@ body{
   color:black;
   font-weight:bold;
   margin:0;
-  white-space:normal;      /* wrap otomatis */
-  word-break:break-word;   /* pecah kata kalau perlu */
+  white-space:normal;      
+  word-break:break-word;   
   line-height:1.2;
 }
 
@@ -89,12 +89,11 @@ body{
 /* Responsif HP */
 @media (max-width:480px){
   .header{
-    align-items:flex-start;  /* biar subjudul wrap ke bawah */
     padding:6px;
   }
 
   .header .left{
-    max-width: calc(100% - 60px); /* sisain space buat sticker */
+    max-width: calc(100% - 60px); 
   }
 
   .header h1{
@@ -109,6 +108,8 @@ body{
   .header p{
     font-size:12px;   
     line-height:1.2;
+    white-space:normal; 
+    word-break:break-word;
   }
 
   .header .hdr-sticker{
@@ -116,52 +117,6 @@ body{
     height:50px;
     flex-shrink:0;
     margin-left:0;
-    align-self:flex-start; /* tetap di kanan header */
-  }
-}
-
-/* Responsif HP */
-@media (max-width:480px){
-  .header{
-    flex-wrap:nowrap; /* jangan pecah baris */
-    justify-content:space-between; /* judul di kiri/sticker di kanan */
-    align-items:flex-start; /* biar subjudul bisa wrap ke bawah */
-    padding:6px;
-  }
-
-  .header .left{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    flex:1;
-    text-align:left; /* judul & subjudul di kiri */
-    margin-right:12px; /* kasih jarak sama sticker */
-  }
-
-  .header h1{
-    font-size:16px;  
-    margin:0 0 2px 0; 
-    line-height:1.2;
-    white-space:nowrap; /* judul tetap satu baris */
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-
-  .header p{
-    font-size:12px;   
-    white-space:normal; /* wrap otomatis */
-    overflow:visible;
-    text-overflow:clip;
-    margin:0;
-    line-height:1.2;
-  }
-
-  .header .hdr-sticker{
-    width:50px; 
-    height:50px;
-    margin-left:0; /* posisi sticker tetap di kanan */
-    flex-shrink:0;
-    align-self:flex-start; /* biar tetap di kanan atas header */
   }
 }
 
@@ -302,7 +257,7 @@ const messages = [
   {who:'me', text:`Aku cuma ngerasa gak enak aja, kesannya kayak aku gak dihargain sebagai seonggok manusia, walaupun aslinya bidadari yahh.`},
   {who:'them', text:`hmmmm`},
   {who:'me', text:`Yuyur gwa kesel. Soalnya ini tuh rasanya kayak orang disuapin makan tiap hari, terus tiba-tiba yang nyuapin ilang gitu aja. Yaa aneh aja.`},
-  {who:'me', text:`Bukan karena aku baper, aku gak munafik. Aku emang suka dan enjoy sama suasana yang kamu kasih. Bukan dalam hal cinta cintaan alay yaa, tapi aku ngerasa nyambung aja ngobrol sama kamu, kayak aku sama ralisha.`},
+  {who:'me', text:`Bukan karena aku baper. Aku gak munafik, aku emang suka dan enjoy sama suasana yang kamu kasih. Bukan dalam hal cinta-cintaan alay yaa, tapi aku ngerasa nyambung dan positif ngobrol sama kamu, kayak aku sama ralisha.`},
   {who:'them', text:`yakinnn deckk`},
   {who:'me', text:`Aku cuma pengen tau, ketua kenapa ketua? Soalnya jujur aja, tiba-tiba ngilang gitu tuh bikin bingung. Kalau kamu gak nyaman, lagi ada masalah yang gabisa kamu omongin, atau ngerasa aku terlalu banyak ngomong, atau risih sama hal-hal yang aku lakuin (kurang ajarr tapi yaa bener juga sih), bilang aja gak papa.`},
   {who:'me', text:`Atau mungkin kamu ngerasa risih karena kamu pernah bilang “aku bingung kalo dipojokin gini marr, atau aku jadi gak enak sama kamu.”`},
@@ -355,27 +310,21 @@ async function typeWithPause(bubbleEl, text){
   }
 }
 
-async function showBubble(obj){
-  const bubble=createBubble(obj);
-  chatArea.appendChild(bubble);
-  playTuing();
-  bubble.classList.add('pop');
-  await new Promise(r=>setTimeout(r,100));
-  bubble.classList.add('show');
-  await typeWithPause(bubble,obj.text);
-}
-
-async function runSequence(){
+async function runChat(){
   for(let i=0;i<messages.length;i++){
-    await showBubble(messages[i]);
-    await new Promise(r=>setTimeout(r, Math.floor(Math.random()*1200)+800));
+    const bubble=createBubble(messages[i]);
+    chatArea.appendChild(bubble);
+    await typeWithPause(bubble,messages[i].text);
   }
+  playTuing();
 }
 
-window.addEventListener('load',()=>{runSequence();});
+runChat();
 </script>
 </body>
 </html>
+
+
 
 
 
