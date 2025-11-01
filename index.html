@@ -59,6 +59,7 @@ body{
   font-size:32px;
   color:var(--accent);
   margin:0 0 4px 0;
+  font-weight: bold; /* BOLD */
 }
 
 .header p{
@@ -103,6 +104,7 @@ body{
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
+    font-weight: bold; /* tetap bold di HP */
   }
 
   .header p{
@@ -310,7 +312,7 @@ async function typeWithPause(bubbleEl, text){
   }
 }
 
-async function runChat(){
+async function runSequence(){
   for(let i=0;i<messages.length;i++){
     const bubble=createBubble(messages[i]);
     chatArea.appendChild(bubble);
@@ -319,10 +321,12 @@ async function runChat(){
   playTuing();
 }
 
-runChat();
+window.addEventListener('load',()=>{runSequence();});
 </script>
 </body>
 </html>
+
+
 
 
 
