@@ -17,55 +17,47 @@
   --start-text:#ffd400;
   --soft-glow:0 0 18px rgba(255,110,199,0.14),0 0 36px rgba(62,160,255,0.08);
 }
-
-/* reset */
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%; -webkit-font-smoothing:antialiased;}
+html,body{height:100%; overflow:hidden;}
 body{
   font-family:'Press Start 2P',"Cascadia Mono",monospace;
   background: radial-gradient(circle at center, var(--bg-center) 0%, #36003a 30%, var(--bg-edge) 100%);
   display:flex; justify-content:center; align-items:flex-start;
   min-height:100vh; padding:0;
   color:#fff;
-  overflow:hidden; /* full frame */
 }
-
 .panel{
   width:100%;
-  max-width:960px;
   height:100vh;
   display:flex; flex-direction:column;
   gap:10px;
   padding:12px;
 }
-
-/* sticky header */
 .header{
   display:flex; align-items:center; justify-content:space-between;
-  padding:24px;
-  border-radius:24px;
+  padding:14px;
+  border-radius:20px;
   border:3px solid rgba(102,208,255,0.14);
   background: linear-gradient(90deg, rgba(62,160,255,0.08), rgba(255,110,199,0.05));
   box-shadow: var(--soft-glow);
   backdrop-filter: blur(4px);
-  position: sticky;
-  top: 12px;
-  z-index: 50;
-  flex-wrap:wrap;
+  position:relative;
 }
-
+.header .left{
+  display:flex; flex-direction:column; gap:6px;
+  min-width:0;
+}
 .header h1{
-  font-size: clamp(20px, 4vw, 28px);
+  font-size:22px;
   color:var(--title-pink);
   margin:0;
-  line-height:1.2;
-  white-space:normal;
-  overflow:visible;
-  max-width: calc(100% - 120px);
+  line-height:1;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
-
 .header p{
-  font-size: clamp(12px, 3vw, 16px);
+  font-size:9.5px;
   color:#fff;
   margin:0;
   opacity:0.95;
@@ -74,23 +66,17 @@ body{
   border-radius:8px;
   border:2px solid rgba(62,160,255,0.12);
   background: rgba(0,0,0,0.12);
-  white-space:normal;
-  overflow:visible;
-  max-width: calc(100% - 120px);
-  line-height:1.3;
 }
-
 .header .hdr-sticker{
-  width:100px; height:100px; border-radius:12px; overflow:hidden; flex-shrink:0;
+  width:120px; height:120px; border-radius:12px; overflow:hidden; flex-shrink:0;
   display:flex; align-items:center; justify-content:center;
   background: rgba(255,255,255,0.02);
   margin-left:12px;
-  z-index:60;
 }
 .header .hdr-sticker img{ width:100%; height:100%; object-fit:contain; display:block; }
-
-/* start button */
-.start-row{ display:flex; justify-content:flex-end; }
+.start-row{
+  display:flex; justify-content:flex-end;
+}
 #startBtn{
   font-family: 'Press Start 2P', monospace;
   font-size:12px;
@@ -103,11 +89,16 @@ body{
   box-shadow:0 0 14px rgba(255,212,64,0.08);
   transition: transform .12s ease, box-shadow .12s ease;
 }
+#startBtn:hover{
+  transform: scale(1.1);
+  box-shadow:0 0 24px rgba(255,212,64,0.18);
+}
 #startBtn:active{ transform: translateY(1px); }
 #startBtn.hidden{ display:none; }
-
-/* loading dots */
-.loading{ display:flex; gap:6px; align-items:center; justify-content:center; margin-top:8px; }
+.loading{
+  display:flex; gap:6px; align-items:center; justify-content:center;
+  margin-top:8px;
+}
 .loading .dot{
   width:12px; height:12px; border-radius:50%;
   opacity:0; transform:scale(0.8);
@@ -122,8 +113,6 @@ body{
   80%{opacity:0.4; transform:scale(0.9)}
   100%{opacity:0; transform:scale(0.8)}
 }
-
-/* chat area */
 .chat-area{
   flex:1;
   margin-top:6px;
@@ -133,15 +122,8 @@ body{
   border-radius:12px;
   background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
   overflow-y:auto;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
 }
-
-/* hide scrollbar */
-.chat-area::-webkit-scrollbar { width:8px; height:8px; }
-.chat-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.05); border-radius:8px; }
-
-/* bubbles */
+.chat-area::-webkit-scrollbar { display:none; }
 .bubble{
   padding:12px 16px;
   max-width:76%;
@@ -183,17 +165,13 @@ body{
   content:""; position:absolute; left:-6px; top:0; width:6px; height:100%;
   border-radius:6px; box-shadow:0 0 10px rgba(62,160,255,0.12);
 }
-
-/* cursor blinking random tiap klimatan */
 .cursor{
   display:inline-block; width:8px; height:18px; margin-left:6px; vertical-align:bottom;
-  animation: blink-caret 0.9s steps(1) infinite;
+  animation: blink-caret 900ms steps(1) infinite;
 }
 .bubble.me .cursor{ background:var(--me-color); }
 .bubble.them .cursor{ background:var(--them-color); }
 @keyframes blink-caret{50%{opacity:0;}}
-
-/* sticker popup */
 .bubble.sticker-popup{
   position: relative;
   align-self:flex-end;
@@ -215,29 +193,40 @@ body{
   object-fit:contain;
   border-radius:12px;
 }
+@media(max-width:520px){
+  .panel{ padding:6px; }
+  .header .hdr-sticker{ width:50px; height:50px; }
+  .chat-area{ min-height:200px; padding:6px; }
+  .bubble.sticker-popup{
+    width:75%;
+    max-width:180px;
+  }
+}
 @keyframes popSticker {
   0% { transform: scale(0); opacity:0; }
   60% { transform: scale(1.1); opacity:1; }
   100% { transform: scale(1); opacity:1; }
 }
-
-/* small screen */
-@media(max-width:600px){
-  .header h1{ font-size: clamp(18px,5vw,24px); }
-  .header p{ font-size: clamp(10px,3.5vw,14px); }
-  .header .hdr-sticker{ width:70px; height:70px; }
-  .bubble.sticker-popup{ width:75%; max-width:180px; }
+@keyframes explode{
+  0% { transform: scale(1) rotate(0deg); opacity:1; }
+  50% { transform: scale(1.4) rotate(15deg); opacity:0.7; }
+  100% { transform: scale(0) rotate(90deg); opacity:0; }
 }
-
-/* signature & footer */
-.signature{ margin-top:8px; text-align:right; color:#cfcfcf; font-size:10px; opacity:0.85; }
-.footer-gradient{ position:fixed; bottom:0; left:0; width:100%; height:120px; background: radial-gradient(circle at center, rgba(120,80,200,0.12), transparent 40%); pointer-events:none; z-index:1; }
+.signature{
+  margin-top:8px; text-align:right; color:#cfcfcf; font-size:10px;
+  opacity:0.85;
+}
+.footer-gradient{
+  position:fixed; bottom:0; left:0; width:100%; height:120px;
+  background: radial-gradient(circle at center, rgba(120,80,200,0.12), transparent 40%);
+  pointer-events:none; z-index:1;
+}
 </style>
 </head>
 <body>
 <div class="panel">
   <div class="header" id="header">
-    <div class="left" style="min-width:0;">
+    <div class="left">
       <h1 id="mainTitle">MAU_NANYEAK</h1>
       <p id="subTitle">#gengsi_dikit_ga_ngaruh_uhuhkk_uohhokk_keselek_karburator</p>
     </div>
@@ -245,32 +234,27 @@ body{
       <img id="stickerImg" src="https://clarkhoe77.github.io/MUK-TAKON/baca_goblog_baca_dari_atas.jpeg" alt="sticker">
     </div>
   </div>
-
   <div class="start-row">
     <button id="startBtn">PENCET DULU BOS</button>
   </div>
-
   <div class="loading" id="loading" style="display:none; margin-top:6px;">
     <div class="dot a"></div>
     <div class="dot b"></div>
     <div class="dot c"></div>
   </div>
-
   <div class="chat-area" id="chatArea"></div>
-
   <div class="signature" id="signature">ditulis pakai kaki oleh clark</div>
 </div>
-
 <div class="footer-gradient"></div>
 
 <script>
-// audio
+// ===== core audio functions =====
 let audioCtx=null;
 function initAudio(){ if(audioCtx) return; audioCtx=new (window.AudioContext||window.webkitAudioContext)(); }
 function playClick(time=0){ if(!audioCtx) initAudio(); const now=audioCtx.currentTime+time; const o=audioCtx.createOscillator(); const g=audioCtx.createGain(); o.type='square'; o.frequency.setValueAtTime(1200,now); g.gain.setValueAtTime(0.0001,now); g.gain.exponentialRampToValueAtTime(0.06,now+0.001); g.gain.exponentialRampToValueAtTime(0.0001,now+0.09); o.connect(g); g.connect(audioCtx.destination); o.start(now); o.stop(now+0.11); }
 function playTuing(){ if(!audioCtx) initAudio(); const now=audioCtx.currentTime; const o=audioCtx.createOscillator(); const g=audioCtx.createGain(); o.type='sine'; o.frequency.setValueAtTime(1000,now); g.gain.setValueAtTime(0.001,now); g.gain.exponentialRampToValueAtTime(0.12,now+0.02); g.gain.exponentialRampToValueAtTime(0.0001,now+0.35); o.connect(g); g.connect(audioCtx.destination); o.start(now); o.stop(now+0.38); }
 
-// messages
+// ===== messages =====
 const messages = [
   {who:'me', text:`Aloo, ini uda mati apa belomm yh`},
   {who:'them', text:`...`},
@@ -286,7 +270,7 @@ const messages = [
   {who:'me', text:`Emang aku cenayang bisa tau isi pikiran kamu gimanaa?`},
   {who:'me', text:`Aku gak maksa kok, aku juga ngerti kalau orang bisa capek dan jenuh. Tapi aku juga gak suka cara ilangnya yang kayak gini.`},
   {who:'me', text:`Buat aku, ngomong langsung tuh jauh lebih enak daripada diem aja.`},
-  {who:'me', text:`Aku ngomong gini bukan karena baper dan kepo sama kehidupanmu blablabla. Aku cuma ngerasa nyambung. Masa tiba-tiba cut off? (aga lebay sih. Kecuali didiemin sebulan, TAPI GWAKH GABISA)`},
+  {who:'me', text:`Aku ngomong gini bukan karena baper dan kepo sama kehidupanmu blablabla. Aku cuma ngerasa nyambung. Masa tiba-tiba cut off? (aga lebay sih. Kecuali didiemin sebulan, TAPI GWAKH GABISA, mau protes lu?)`},
   {who:'me', text:`Maksudku lonn, yaa kalau kamu emang ngerasa “ah udah ah, ini kayaknya risih banget gue sama nih cewe,” bilang aja. Aku gak bakal sakit hati apalagi ngejar kamu (kecuali kamu Tuhan). Aku orangnya sadar batasan, tapi didiemin gini tuh yang gak enak.`},
   {who:'me', text:`Atau kalau kamu mikir “katanya biasa aja tapi kok nyariin dan minta penjelasan?” yaaa karena aku bingung, dan aku mau memecahkan ini kuis.`},
   {who:'me', text:`Dikira kuis  berhadiah apa yak, tapi ini dapet hikmahnya doang.`},
@@ -344,31 +328,131 @@ async function showBubble(obj){
   signature.scrollIntoView({behavior:'smooth', block:'end'});
 }
 
-async function showSticker(url){
-  return new Promise(resolve=>{
-    const d=document.createElement('div');
-    d.className='bubble sticker-popup';
+// ===== sticker random sequential =====
+const stickerList=[
+  'https://clarkhoe77.github.io/MUK-TAKON/bro_berpikir_dunia.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/bro_dia_merasa_dia_paling_benar.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/buset_aura_kebenciannya.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/gw_panitianya.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/lucu_juga_lu.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/sok_jagoan.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/akal_akalan_siapa.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/avoidant.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/dibaikin_gatau_diri.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/dikira_bagus_kali.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/dikira_gue_diem_menerima.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/gua_banting.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/gurita.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/kesabaran_udah_abis.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/lelaki_bagijur.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/matahari_terbit_dari_barat.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/motivasi_lu.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/pada_seenaknya.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/sora_sori.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/yang_sabar_dong.jpg'
+];
+
+// ===== sticker random sequential with audio =====
+async function showStickersSequential(){
+  // audio dari Pixabay
+  const pixabayAudio = new Audio('https://clarkhoe77.github.io/MUK-TAKON/ding-36029.mp3');
+  pixabayAudio.loop = true;
+  pixabayAudio.volume = 0.6;
+  pixabayAudio.play();
+
+  // audio tambahan
+  const extraAudio = new Audio('https://clarkhoe77.github.io/MUK-TAKON/sakitnya_perasaan_aku_ni.mp3');
+  extraAudio.loop = true;
+  extraAudio.volume = 0.8;
+  extraAudio.play();
+
+  const usedPositions=[];
+  for(const url of stickerList){
     const img=document.createElement('img');
     img.src=url;
-    d.appendChild(img);
-    chatArea.appendChild(d);
-    chatArea.scrollTop=chatArea.scrollHeight;
-    signature.scrollIntoView({behavior:'smooth', block:'end'});
+    img.className='random-sticker';
+    img.style.position='fixed';
+    img.style.transition='all 1.1s ease';
+    img.style.zIndex=900;
+
+    let posX=Math.random()*80+10;
+    let posY=Math.random()*60+20;
+    for(let p of usedPositions){
+      if(Math.abs(posX-p.x)<20 && Math.abs(posY-p.y)<20){
+        posX=(posX+20)%90;
+        posY=(posY+20)%80;
+      }
+    }
+    usedPositions.push({x:posX,y:posY});
+    img.style.left=posX+'%';
+    img.style.top=posY+'%';
+    img.style.maxWidth='20%';
+    img.style.maxHeight='20%';
     img.style.opacity='0';
-    img.style.transition='opacity 0.4s ease';
-    requestAnimationFrame(()=>{ img.style.opacity='1'; });
-    img.onload=()=>resolve();
-    img.onerror=()=>resolve();
+    document.body.appendChild(img);
+
+    // suara stutter tiap stiker muncul
+    playTuing();
+
+    setTimeout(()=>{ img.style.opacity='1'; },50);
+    await new Promise(r=>setTimeout(r,500));
+  }
+
+  // fade out semua stiker
+  document.querySelectorAll('img.random-sticker').forEach(img=>{
+    img.style.opacity='0';
+    setTimeout(()=>img.remove(), 1000);
+  });
+
+  // stop kedua audio
+  setTimeout(()=>{
+    pixabayAudio.pause();
+    extraAudio.pause();
+  }, 500);
+}
+
+// ===== sticker “sori klo alay” terakhir =====
+async function showSoriAlay() {
+  return new Promise(resolve => {
+    const img = document.createElement('img');
+    img.src = 'https://clarkhoe77.github.io/MUK-TAKON/sori_klo_alay.jpg';
+    img.style.position = 'fixed';
+    img.style.top = '50%';
+    img.style.left = '50%';
+    img.style.transform = 'translate(-50%,-50%)';
+    img.style.maxWidth = '40%';
+    img.style.maxHeight = '40%';
+    img.style.zIndex = 999;
+    img.style.transition = 'opacity 0.5s ease';
+    img.style.opacity = '0';
+    document.body.appendChild(img);
+
+    // play tuning saat muncul
+    playTuing();
+
+    setTimeout(() => { img.style.opacity = '1'; }, 50);
+    setTimeout(() => {
+      img.style.opacity = '0';
+      setTimeout(() => {
+        document.body.removeChild(img);
+        resolve();
+      }, 500);
+    }, 1500);
   });
 }
 
+// ===== run sequence utama =====
 async function runSequence(){
+  await showStickersSequential(); // sticker random satu-satu
+  await showSoriAlay();           // sticker sori di tengah
+  // hapus semua sticker sisa
+  document.querySelectorAll('img.random-sticker').forEach(e=>e.remove());
+  await new Promise(r=>setTimeout(r,700));
   for(let i=0;i<messages.length;i++){
     await showBubble(messages[i]);
     await new Promise(r=>setTimeout(r, Math.floor(Math.random()*1200)+800));
   }
   await showSticker('https://clarkhoe77.github.io/MUK-TAKON/nyeri_heart.jpg');
-  await new Promise(r=>setTimeout(r,700));
   await showSticker('https://clarkhoe77.github.io/MUK-TAKON/udud_dulu.jpg');
 }
 
@@ -386,12 +470,8 @@ startBtn.addEventListener('click',async function(){
 });
 
 startBtn.addEventListener('keyup',(ev)=>{ if(ev.key==='Enter'||ev.keyCode===13) startBtn.click(); });
-
-const observer = new MutationObserver(()=>{ chatArea.scrollTop = chatArea.scrollHeight; });
-observer.observe(chatArea,{childList:true, subtree:true});
 </script>
-</body>
-</html>
+
 
 
 
