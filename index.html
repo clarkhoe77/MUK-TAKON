@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>NANYA DOANG BUKAN NAKSIR BUKAN SULAP BUKAN SIHIR (Start)</title>
+<title>NANYA DOANG // Full Frame + Cursor Blinking</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
@@ -21,28 +21,24 @@
 
 /* reset */
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%; width:100%; -webkit-font-smoothing:antialiased; overflow:hidden;}
+html,body{height:100%;width:100%; -webkit-font-smoothing:antialiased; overflow:hidden;}
 body{
   font-family:'Press Start 2P',"Cascadia Mono",monospace;
   background: radial-gradient(circle at center, var(--bg-center) 0%, #36003a 30%, var(--bg-edge) 100%);
   display:flex; justify-content:center; align-items:flex-start;
-  min-height:100vh;
+  min-height:100vh; padding:0;
   color:#fff;
 }
 
-/* panel jadi flex column; header ada di atas, chat-area flex-grow */
+/* panel full frame */
 .panel{
-  width:100%;
-  max-width:960px;
-  height:100vh;
-  display:flex; flex-direction:column;
-  gap:10px;
-  padding:12px;
+  width:100%; max-width:100%; height:100vh;
+  display:flex; flex-direction:column; gap:10px; padding:12px;
 }
 
-/* === MOD: sticky header === */
+/* sticky header */
 .header{
-  display:flex; align-items:flex-start; justify-content:space-between;
+  display:flex; align-items:center; justify-content:space-between;
   padding:var(--header-padding);
   border-radius:20px;
   border:3px solid rgba(102,208,255,0.14);
@@ -50,46 +46,44 @@ body{
   box-shadow: var(--soft-glow);
   backdrop-filter: blur(4px);
   position: sticky;
-  top:12px;
+  top: 12px;
   z-index:50;
+  flex-wrap:wrap;
 }
 
-/* responsive font sizing using clamp */
 .header h1{
   font-size: clamp(16px, 2.2vw, 22px);
   color:var(--title-pink);
-  margin:0;
-  line-height:1.1;
-  white-space:normal;
+  line-height:1.2;
+  max-width: calc(100% - 100px);
   overflow:visible;
-  word-wrap:break-word;
+  white-space: normal;
 }
+
 .header p{
   font-size: clamp(8px, 1.6vw, 10px);
   color:#fff;
-  margin:4px 0 0 0;
-  opacity:0.95;
-  display:inline-block;
+  margin-top:4px;
   padding:6px 8px;
   border-radius:8px;
   border:2px solid rgba(62,160,255,0.12);
   background: rgba(0,0,0,0.12);
-  white-space:normal;
   overflow:visible;
-  word-wrap:break-word;
+  white-space: normal;
+  max-width: calc(100% - 100px);
+  line-height:1.2;
 }
 
-/* sticker di header */
 .header .hdr-sticker{
-  width:120px; height:120px; border-radius:12px; overflow:hidden; flex-shrink:0;
+  width:80px; height:80px; border-radius:12px; overflow:hidden;
   display:flex; align-items:center; justify-content:center;
   background: rgba(255,255,255,0.02);
   margin-left:12px;
-  z-index:60;
+  flex-shrink:0;
 }
 .header .hdr-sticker img{ width:100%; height:100%; object-fit:contain; display:block; }
 
-/* start button area */
+/* start button */
 .start-row{
   display:flex; justify-content:flex-end;
 }
@@ -128,24 +122,19 @@ body{
   100%{opacity:0; transform:scale(0.8)}
 }
 
-/* === chat area === */
+/* chat area */
 .chat-area{
-  flex:1;
-  display:flex; flex-direction:column; gap:12px;
-  width:100%;
-  padding:12px 8px;
-  border-radius:12px;
+  flex:1; margin-top:6px; display:flex; flex-direction:column; gap:12px;
+  width:100%; padding:12px 8px; border-radius:12px;
   background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
-  overflow-y:auto;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
+  overflow-y:auto; -webkit-overflow-scrolling: touch; scroll-behavior: smooth;
 }
 
-/* hide scrollbar on webkit but still scrollable */
+/* hide scrollbar on webkit */
 .chat-area::-webkit-scrollbar { height:8px; width:8px; }
 .chat-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.05); border-radius:8px; }
 
-/* bubble styles */
+/* bubble */
 .bubble{
   padding:12px 16px;
   max-width:76%;
@@ -162,13 +151,42 @@ body{
   border-color: rgba(255,110,199,0.28);
   color: var(--me-color);
   border-top-right-radius:22px;
+  animation: neonBlinkMe 1.5s infinite alternate;
 }
 .bubble.them{
   align-self:flex-start;
   border-color: rgba(62,160,255,0.28);
   color: var(--them-color);
   border-top-left-radius:22px;
+  animation: neonBlinkThem 1.5s infinite alternate;
 }
+@keyframes neonBlinkMe{
+  0%,100%{ box-shadow:0 0 12px rgba(255,110,199,0.2),0 0 22px rgba(255,110,199,0.1);}
+  50%{ box-shadow:0 0 18px rgba(255,110,199,0.35),0 0 28px rgba(255,110,199,0.15);}
+}
+@keyframes neonBlinkThem{
+  0%,100%{ box-shadow:0 0 12px rgba(62,160,255,0.2),0 0 22px rgba(62,160,255,0.1);}
+  50%{ box-shadow:0 0 18px rgba(62,160,255,0.35),0 0 28px rgba(62,160,255,0.15);}
+}
+.bubble.me::after{
+  content:""; position:absolute; right:-6px; top:0; width:6px; height:100%;
+  border-radius:6px; box-shadow:0 0 10px rgba(255,110,199,0.12);
+}
+.bubble.them::after{
+  content:""; position:absolute; left:-6px; top:0; width:6px; height:100%;
+  border-radius:6px; box-shadow:0 0 10px rgba(62,160,255,0.12);
+}
+
+/* cursor */
+.cursor{
+  display:inline-block; width:8px; height:18px; margin-left:6px; vertical-align:bottom;
+  animation: blink-caret 900ms steps(1) infinite;
+}
+.bubble.me .cursor{ background:var(--me-color); }
+.bubble.them .cursor{ background:var(--them-color); }
+@keyframes blink-caret{50%{opacity:0;}}
+
+/* sticker */
 .bubble.sticker-popup{
   position: relative;
   align-self:flex-end;
@@ -182,6 +200,7 @@ body{
   justify-content:center;
   align-items:center;
   overflow:visible;
+  animation: popSticker 0.4s ease forwards;
 }
 .bubble.sticker-popup img{
   width:100%;
@@ -189,38 +208,22 @@ body{
   object-fit:contain;
   border-radius:12px;
 }
+@keyframes popSticker {
+  0% { transform: scale(0); opacity:0; }
+  60% { transform: scale(1.1); opacity:1; }
+  100% { transform: scale(1); opacity:1; }
+}
 
-/* small screen tweaks */
+/* responsive */
 @media(max-width:600px){
-  .header{
-    flex-direction:row;
-    align-items:flex-start;
-    gap:8px;
-    padding:10px;
-  }
-  .header h1, .header p{
-    max-width: calc(100% - 90px);
-  }
-  .header .hdr-sticker{
-    width:70px; height:70px;
-    margin-left:8px;
-  }
-  .bubble.sticker-popup{
-    width:75%;
-    max-width:180px;
-  }
+  .header h1,.header p{ max-width: calc(100% - 90px); }
+  .header .hdr-sticker{ width:70px; height:70px; }
+  .bubble.sticker-popup{ width:75%; max-width:180px; }
 }
 
 /* signature & footer */
-.signature{
-  margin-top:8px; text-align:right; color:#cfcfcf; font-size:10px;
-  opacity:0.85;
-}
-.footer-gradient{
-  position:fixed; bottom:0; left:0; width:100%; height:120px;
-  background: radial-gradient(circle at center, rgba(120,80,200,0.12), transparent 40%);
-  pointer-events:none; z-index:1;
-}
+.signature{ margin-top:8px; text-align:right; color:#cfcfcf; font-size:10px; opacity:0.85; }
+.footer-gradient{ position:fixed; bottom:0; left:0; width:100%; height:120px; background: radial-gradient(circle at center, rgba(120,80,200,0.12), transparent 40%); pointer-events:none; z-index:1; }
 </style>
 </head>
 <body>
@@ -253,12 +256,13 @@ body{
 <div class="footer-gradient"></div>
 
 <script>
-// ===== core functions unchanged =====
+// audio
 let audioCtx=null;
 function initAudio(){ if(audioCtx) return; audioCtx=new (window.AudioContext||window.webkitAudioContext)(); }
 function playClick(time=0){ if(!audioCtx) initAudio(); const now=audioCtx.currentTime+time; const o=audioCtx.createOscillator(); const g=audioCtx.createGain(); o.type='square'; o.frequency.setValueAtTime(1200,now); g.gain.setValueAtTime(0.0001,now); g.gain.exponentialRampToValueAtTime(0.06,now+0.001); g.gain.exponentialRampToValueAtTime(0.0001,now+0.09); o.connect(g); g.connect(audioCtx.destination); o.start(now); o.stop(now+0.11); }
 function playTuing(){ if(!audioCtx) initAudio(); const now=audioCtx.currentTime; const o=audioCtx.createOscillator(); const g=audioCtx.createGain(); o.type='sine'; o.frequency.setValueAtTime(1000,now); g.gain.setValueAtTime(0.001,now); g.gain.exponentialRampToValueAtTime(0.12,now+0.02); g.gain.exponentialRampToValueAtTime(0.0001,now+0.35); o.connect(g); g.connect(audioCtx.destination); o.start(now); o.stop(now+0.38); }
 
+// messages
 const messages = [
   {who:'me', text:`Aloo, ini uda mati apa belomm yh`},
   {who:'them', text:`...`},
@@ -266,7 +270,7 @@ const messages = [
   {who:'me', text:`Aku cuma ngerasa gak enak aja, kesannya kayak aku gak dihargain sebagai seonggok manusia, walaupun aslinya bidadari yahh.`},
   {who:'them', text:`hmmmm`},
   {who:'me', text:`Yuyur gwa kesel. Soalnya ini tuh rasanya kayak orang disuapin makan tiap hari, terus tiba-tiba yang nyuruh ilang gitu aja. Yaa aneh aja.`},
-  {who:'me', text:`Bukan karena aku baper. Aku gak munafik, aku emang suka dan enjoy sama suasana yang kamu kasi. Bukan dalam hal cinta cintaan alay yaa, tapi aku ngerasa nyambung dan positif ngobrol sama kamu, kayak aku sama ralisha.`},
+  {who:'me', text:`Bukan karena aku baper. Aku gak munafik, aku emang suka dan enjoy sama suasana yang kamu kasih. Bukan dalam hal cinta cintaan alay yaa, tapi aku ngerasa nyambung dan positif ngobrol sama kamu, kayak aku sama ralisha.`},
   {who:'them', text:`yakinnn deckk`},
   {who:'me', text:`Aku cuma pengen tau. Soalnya jujur aja, tiba-tiba ngilang gitu tuh bikin bingung. Kalau kamu gak nyaman, lagi ada masalah yang gabisa kamu omongin, atau ngerasa aku terlalu banyak ngomong, atau risih sama hal-hal yang aku lakuin (kurang ajarr tapi yaa bener juga sih), bilang aja gak papa.`},
   {who:'me', text:`Atau mungkin kamu ngerasa risih karena kamu pernah bilang “aku bingung kalo dipojokin gini marr", atau "aku jadi gak enak sama kamu.”`},
@@ -332,24 +336,21 @@ async function showBubble(obj){
   signature.scrollIntoView({behavior:'smooth', block:'end'});
 }
 
-async function showSticker(url) {
-  return new Promise(resolve => {
-    const d = document.createElement('div');
-    d.className = 'bubble sticker-popup';
-    const img = document.createElement('img');
-    img.src = url;
-
+async function showSticker(url){
+  return new Promise(resolve=>{
+    const d=document.createElement('div');
+    d.className='bubble sticker-popup';
+    const img=document.createElement('img');
+    img.src=url;
     d.appendChild(img);
     chatArea.appendChild(d);
-    chatArea.scrollTop = chatArea.scrollHeight;
-    signature.scrollIntoView({ behavior: 'smooth', block: 'end' });
-
-    img.style.opacity = '0';
-    img.style.transition = 'opacity 0.4s ease';
-    requestAnimationFrame(() => { img.style.opacity = '1'; });
-
-    img.onload = () => resolve();
-    img.onerror = () => resolve();
+    chatArea.scrollTop=chatArea.scrollHeight;
+    signature.scrollIntoView({behavior:'smooth', block:'end'});
+    img.style.opacity='0';
+    img.style.transition='opacity 0.4s ease';
+    requestAnimationFrame(()=>{ img.style.opacity='1'; });
+    img.onload=()=>resolve();
+    img.onerror=()=>resolve();
   });
 }
 
@@ -359,7 +360,7 @@ async function runSequence(){
     await new Promise(r=>setTimeout(r, Math.floor(Math.random()*1200)+800));
   }
   await showSticker('https://clarkhoe77.github.io/MUK-TAKON/nyeri_heart.jpg');
-  await new Promise(r => setTimeout(r, 700));
+  await new Promise(r=>setTimeout(r,700));
   await showSticker('https://clarkhoe77.github.io/MUK-TAKON/udud_dulu.jpg');
 }
 
@@ -368,7 +369,7 @@ const loadingEl=document.getElementById('loading');
 
 startBtn.addEventListener('click',async function(){
   startBtn.disabled=true;
-  startBtn.classList.add('hidden'); // hide start button
+  startBtn.classList.add('hidden');
   loadingEl.style.display='flex';
   playTuing();
   await new Promise(r=>setTimeout(r,3000));
@@ -378,14 +379,12 @@ startBtn.addEventListener('click',async function(){
 
 startBtn.addEventListener('keyup',(ev)=>{ if(ev.key==='Enter'||ev.keyCode===13) startBtn.click(); });
 
-const headerEl = document.getElementById('header');
-const observer = new MutationObserver(() => {
-  chatArea.scrollTop = chatArea.scrollHeight;
-});
-observer.observe(chatArea, { childList: true, subtree: true });
+const observer = new MutationObserver(()=>{ chatArea.scrollTop = chatArea.scrollHeight; });
+observer.observe(chatArea,{childList:true, subtree:true});
 </script>
 </body>
 </html>
+
 
 
 
