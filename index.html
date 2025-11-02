@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MAU NANYA // Neon Game Style (Start)</title>
+<title>NANYA DOANG BUKAN NAKSIR BUKAN SULAP BUKAN SIHIR (Start)</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
@@ -174,14 +174,42 @@ body{
   border-color: rgba(255,110,199,0.28);
   background: rgba(255,110,199,0.18);
   padding:6px;
-  max-width:120px;
-  height:120px;
+  width: 55%;
+  max-width: 260px;
   border-radius:12px;
   display:flex;
   justify-content:center;
   align-items:center;
   overflow:hidden;
   animation: popSticker 0.4s ease forwards;
+}
+.bubble.sticker-popup{
+  position: relative;
+  align-self:flex-end;
+  border-color: rgba(255,110,199,0.28);
+  background: rgba(255,110,199,0.18);
+  padding:6px;
+  width: 55%;
+  max-width: 260px;
+  border-radius:12px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  /* hilangkan overflow:hidden supaya gambar full */
+  overflow:visible;
+  animation: popSticker 0.4s ease forwards;
+}
+.bubble.sticker-popup img{
+  width:100%;      /* full lebar bubble */
+  height:auto;     /* tinggi proporsional */
+  object-fit:contain; /* gambar gak nge-stretch */
+  border-radius:12px;
+}
+@media(max-width:520px){
+  .bubble.sticker-popup{
+    width:75%;
+    max-width:180px;
+  }
 }
 @keyframes popSticker {
   0% { transform: scale(0); opacity:0; }
@@ -201,6 +229,10 @@ body{
   .panel{ padding:6px; }
   .header .hdr-sticker{ width:50px; height:50px; }
   .chat-area{ min-height:200px; padding:6px; }
+  .bubble.sticker-popup{
+    width:75%;
+    max-width:180px;
+  }
 }
 </style>
 </head>
@@ -236,35 +268,35 @@ function playClick(time=0){ if(!audioCtx) initAudio(); const now=audioCtx.curren
 function playTuing(){ if(!audioCtx) initAudio(); const now=audioCtx.currentTime; const o=audioCtx.createOscillator(); const g=audioCtx.createGain(); o.type='sine'; o.frequency.setValueAtTime(1000,now); g.gain.setValueAtTime(0.001,now); g.gain.exponentialRampToValueAtTime(0.12,now+0.02); g.gain.exponentialRampToValueAtTime(0.0001,now+0.35); o.connect(g); g.connect(audioCtx.destination); o.start(now); o.stop(now+0.38); }
 
 const messages = [
-      {who:'me', text:`Aloo, ini uda mati apa belomm yh`},
-      {who:'them', text:`...`},
-      {who:'me', text:`Ekhm EKHEM jadii, lonn aku mau ngomong sesuatu, tapi bukan karena aku mau ngedrama atau marah yaa.`},
-      {who:'me', text:`Aku cuma ngerasa gak enak aja, kesannya kayak aku gak dihargain sebagai seonggok manusia, walaupun aslinya bidadari yahh.`},
-      {who:'them', text:`hmmmm`},
-      {who:'me', text:`Yuyur gwa kesel. Soalnya ini tuh rasanya kayak orang disuapin makan tiap hari, terus tiba-tiba yang nyuruh ilang gitu aja. Yaa aneh aja.`},
-      {who:'me', text:`Bukan karena aku baper. Aku gak munafik, aku emang suka dan enjoy sama suasana yang kamu kasih. Bukan dalam hal cinta cintaan alay yaa, tapi aku ngerasa nyambung dan positif ngobrol sama kamu, kayak aku sama ralisha.`},
-      {who:'them', text:`yakinnn deckk`},
-      {who:'me', text:`Aku cuma pengen tau. Soalnya jujur aja, tiba-tiba ngilang gitu tuh bikin bingung. Kalau kamu gak nyaman, lagi ada masalah yang gabisa kamu omongin, atau ngerasa aku terlalu banyak ngomong, atau risih sama hal-hal yang aku lakuin (kurang ajarr tapi yaa bener juga sih), bilang aja gak papa.`},
-      {who:'me', text:`Atau mungkin kamu ngerasa risih karena kamu pernah bilang “aku bingung kalo dipojokin gini marr", atau "aku jadi gak enak sama kamu.”`},
-      {who:'me', text:`Tapi BOSS,, KOMUNIKASI ADALAH KOENTJI.`},
-      {who:'me', text:`Emang aku cenayang bisa tau isi pikiran kamu gimanaa?`},
-      {who:'me', text:`Aku gak maksa kok, aku juga ngerti kalau orang bisa capek dan jenuh. Tapi aku juga gak suka cara ilangnya yang kayak gini.`},
-      {who:'me', text:`Buat aku, ngomong langsung tuh jauh lebih enak daripada diem aja.`},
-      {who:'me', text:`Aku ngomong gini bukan karena baper dan kepo sama kehidupanmu blablabla. Aku cuma ngerasa nyambung. Masa tiba-tiba cut off? (aga lebay sih. Kecuali didiemin sebulan, TAPI GWAKH GABISA)`},
-      {who:'me', text:`Maksudku lonn, yaa kalau kamu emang ngerasa “ah udah ah, ini kayaknya risih banget gue sama nih cewe,” bilang aja. Aku gak bakal sakit hati apalagi ngejar kamu (kecuali kamu Tuhan). Aku orangnya sadar batasan, tapi didiemin gini tuh yang gak enak.`},
-      {who:'me', text:`Atau kalau kamu mikir “katanya biasa aja tapi kok nyariin dan minta penjelasan?” yaaa karena aku bingung, dan aku mau memecahkan ini kuis.`},
-      {who:'me', text:`Dikira kuis  berhadiah apa yak, tapi ini dapet hikmahnya doang.`},
-      {who:'me', text:`Atau mungkin kaya yang pernah kamu bilang, kamu gak nyaman kalau terlalu deket sama cewek, yaa siapa tau kamu ngerasa aku gitu juga dan mikir aku baper. Enggak lonn, tenang ajaa. Aku cuma mau tau aja biar jelas.`},
-      {who:'me', text:`Aku juga gini ke temenku. Kamu sendiri juga pernah bilang kalau didiemin tuh gak enak.`},
-      {who:'me', text:`Ekhemm`},
-      {who:'them', text:`ehh banyak benerr`},
-      {who:'me', text:`KAMU GAPERLU NGERASA GA ENAK KE AKU KARENA AKU AJA GA ENAK NGOMONG GINII CUMAAAAAAA aku mau nyampein isi pikiranku, jadi feel free aja kalo mau menanggapi.`},
-      {who:'me', text:`Jadii yah temenku banyak, aku ga ketergantungan sama kamu. Cuma aku bukan tipe orang yang bisa cut off langsung kaya ga ada apa apa. Tapi kalo kamu mau, ya we're fine broww.`},
-      {who:'me', text:`YAAH Chat sebelumnya diemin aja ya anjerr gausa dibales , tapi kalo yang ini ga dibales, bengkelmu aku bom.`},
-      {who:'me', text:`Soalnya aku juga malu yaaaa jadi LAST CHAT, ohokk ohok ekhm. Yaa ini aku bersikap dewasa dan menurunkan gengsi makannya aku nanyaa`},
-      {who:'me', text:`Kalo kamu males baca, intine wae boz, 'aku gasuka didiemin, aku mau tau kenapa gitu. Kalo gasuka bilang aja jangan merasa ga enak karena akupun ga enak ngomong gini. DAN JANGAN BALES INI KALO TERPAKSA (tapii ya minimal bales kek anjer seleb, hp lu dicuri dek?)' dahh itu ajaa.`},
-      {who:'me', text:`Sekian. Terima kasih.`}
-    ];
+  {who:'me', text:`Aloo, ini uda mati apa belomm yh`},
+  {who:'them', text:`...`},
+  {who:'me', text:`Ekhm EKHEM jadii, lonn aku mau ngomong sesuatu, tapi bukan karena aku mau ngedrama atau marah yaa.`},
+  {who:'me', text:`Aku cuma ngerasa gak enak aja, kesannya kayak aku gak dihargain sebagai seonggok manusia, walaupun aslinya bidadari yahh.`},
+  {who:'them', text:`hmmmm`},
+  {who:'me', text:`Yuyur gwa kesel. Soalnya ini tuh rasanya kayak orang disuapin makan tiap hari, terus tiba-tiba yang nyuruh ilang gitu aja. Yaa aneh aja.`},
+  {who:'me', text:`Bukan karena aku baper. Aku gak munafik, aku emang suka dan enjoy sama suasana yang kamu kasih. Bukan dalam hal cinta cintaan alay yaa, tapi aku ngerasa nyambung dan positif ngobrol sama kamu, kayak aku sama ralisha.`},
+  {who:'them', text:`yakinnn deckk`},
+  {who:'me', text:`Aku cuma pengen tau. Soalnya jujur aja, tiba-tiba ngilang gitu tuh bikin bingung. Kalau kamu gak nyaman, lagi ada masalah yang gabisa kamu omongin, atau ngerasa aku terlalu banyak ngomong, atau risih sama hal-hal yang aku lakuin (kurang ajarr tapi yaa bener juga sih), bilang aja gak papa.`},
+  {who:'me', text:`Atau mungkin kamu ngerasa risih karena kamu pernah bilang “aku bingung kalo dipojokin gini marr", atau "aku jadi gak enak sama kamu.”`},
+  {who:'me', text:`Tapi BOSS,, KOMUNIKASI ADALAH KOENTJI.`},
+  {who:'me', text:`Emang aku cenayang bisa tau isi pikiran kamu gimanaa?`},
+  {who:'me', text:`Aku gak maksa kok, aku juga ngerti kalau orang bisa capek dan jenuh. Tapi aku juga gak suka cara ilangnya yang kayak gini.`},
+  {who:'me', text:`Buat aku, ngomong langsung tuh jauh lebih enak daripada diem aja.`},
+  {who:'me', text:`Aku ngomong gini bukan karena baper dan kepo sama kehidupanmu blablabla. Aku cuma ngerasa nyambung. Masa tiba-tiba cut off? (aga lebay sih. Kecuali didiemin sebulan, TAPI GWAKH GABISA)`},
+  {who:'me', text:`Maksudku lonn, yaa kalau kamu emang ngerasa “ah udah ah, ini kayaknya risih banget gue sama nih cewe,” bilang aja. Aku gak bakal sakit hati apalagi ngejar kamu (kecuali kamu Tuhan). Aku orangnya sadar batasan, tapi didiemin gini tuh yang gak enak.`},
+  {who:'me', text:`Atau kalau kamu mikir “katanya biasa aja tapi kok nyariin dan minta penjelasan?” yaaa karena aku bingung, dan aku mau memecahkan ini kuis.`},
+  {who:'me', text:`Dikira kuis  berhadiah apa yak, tapi ini dapet hikmahnya doang.`},
+  {who:'me', text:`Atau mungkin kaya yang pernah kamu bilang, kamu gak nyaman kalau terlalu deket sama cewek, yaa siapa tau kamu ngerasa aku gitu juga dan mikir aku baper. Enggak lonn, tenang ajaa. Aku cuma mau tau aja biar jelas.`},
+  {who:'me', text:`Aku juga gini ke temenku. Kamu sendiri juga pernah bilang kalau didiemin tuh gak enak.`},
+  {who:'me', text:`Ekhemm`},
+  {who:'them', text:`ehh banyak benerr`},
+  {who:'me', text:`KAMU GAPERLU NGERASA GA ENAK KE AKU KARENA AKU AJA GA ENAK NGOMONG GINII CUMAAAAAAA aku mau nyampein isi pikiranku, jadi feel free aja kalo mau menanggapi.`},
+  {who:'me', text:`Jadii yah temenku banyak, aku ga ketergantungan sama kamu. Cuma aku bukan tipe orang yang bisa cut off langsung kaya ga ada apa apa. Tapi kalo kamu mau, ya we're fine broww.`},
+  {who:'me', text:`YAAH Chat sebelumnya diemin aja ya anjerr gausa dibales , tapi kalo yang ini ga dibales, bengkelmu aku bom.`},
+  {who:'me', text:`Soalnya aku juga malu yaaaa jadi LAST CHAT, ohokk ohok ekhm. Yaa ini aku bersikap dewasa dan menurunkan gengsi makannya aku nanyaa`},
+  {who:'me', text:`Kalo kamu males baca, intine wae boz, 'aku gasuka didiemin, aku mau tau kenapa gitu. Kalo gasuka bilang aja jangan merasa ga enak karena akupun ga enak ngomong gini. DAN JANGAN BALES INI KALO TERPAKSA (tapii ya minimal bales kek anjer seleb, hp lu dicuri dek?)' dahh itu ajaa.`},
+  {who:'me', text:`Sekian. Terima kasih.`}
+];
 
 const chatArea=document.getElementById('chatArea');
 const signature=document.getElementById('signature');
@@ -308,6 +340,24 @@ async function showBubble(obj){
   signature.scrollIntoView({behavior:'smooth', block:'end'});
 }
 
+async function showSticker(url){
+  return new Promise(resolve=>{
+    const d=document.createElement('div');
+    d.className='bubble sticker-popup';
+    const img=document.createElement('img');
+    img.src=url;
+
+    img.onload = ()=>{ 
+      chatArea.scrollTop = chatArea.scrollHeight;
+      signature.scrollIntoView({behavior:'smooth', block:'end'});
+      resolve();
+    }
+
+    d.appendChild(img);
+    chatArea.appendChild(d);
+  });
+}
+
 async function runSequence(){
   for(let i=0;i<messages.length;i++){
     await showBubble(messages[i]);
@@ -315,22 +365,7 @@ async function runSequence(){
   }
   // tampilkan sticker pop-up berurutan
   await showSticker('https://clarkhoe77.github.io/MUK-TAKON/nyeri_heart.jpg');
-  await new Promise(r=>setTimeout(r,400));
   await showSticker('https://clarkhoe77.github.io/MUK-TAKON/udud_dulu.jpg');
-}
-
-async function showSticker(url){
-  const d=document.createElement('div');
-  d.className='bubble sticker-popup';
-  const img=document.createElement('img');
-  img.src=url;
-  img.style.width='100%';
-  img.style.height='100%';
-  img.style.objectFit='contain';
-  d.appendChild(img);
-  chatArea.appendChild(d);
-  chatArea.scrollTop=chatArea.scrollHeight;
-  signature.scrollIntoView({behavior:'smooth', block:'end'});
 }
 
 const startBtn=document.getElementById('startBtn');
@@ -350,6 +385,7 @@ startBtn.addEventListener('keyup',(ev)=>{ if(ev.key==='Enter'||ev.keyCode===13) 
 </script>
 </body>
 </html>
+
 
 
 
