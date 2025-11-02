@@ -340,21 +340,27 @@ async function showBubble(obj){
   signature.scrollIntoView({behavior:'smooth', block:'end'});
 }
 
-async function showSticker(url){
-  return new Promise(resolve=>{
-    const d=document.createElement('div');
-    d.className='bubble sticker-popup';
-    const img=document.createElement('img');
-    img.src=url;
+async function showSticker(url) {
+  return new Promise(resolve => {
+    const d = document.createElement('div');
+    d.className = 'bubble sticker-popup';
+    const img = document.createElement('img');
+    img.src = url;
 
-    img.onload = ()=>{ 
-      chatArea.scrollTop = chatArea.scrollHeight;
-      signature.scrollIntoView({behavior:'smooth', block:'end'});
-      resolve();
-    }
-
+    // langsung append biar gak nunggu load baru render
     d.appendChild(img);
     chatArea.appendChild(d);
+    chatArea.scrollTop = chatArea.scrollHeight;
+    signature.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+    // fade-in halus biar gak “pop kasar”
+    img.style.opacity = '0';
+    img.style.transition = 'opacity 0.4s ease';
+    requestAnimationFrame(() => { img.style.opacity = '1'; });
+
+    // kalo load-nya kelar atau error, lanjut aja biar ga freeze
+    img.onload = () => resolve();
+    img.onerror = () => resolve();
   });
 }
 
@@ -364,8 +370,9 @@ async function runSequence(){
     await new Promise(r=>setTimeout(r, Math.floor(Math.random()*1200)+800));
   }
   // tampilkan sticker pop-up berurutan
-  await showSticker('https://clarkhoe77.github.io/MUK-TAKON/nyeri_heart.jpg');
-  await showSticker('https://clarkhoe77.github.io/MUK-TAKON/udud_dulu.jpg');
+await showSticker('https://clarkhoe77.github.io/MUK-TAKON/nyeri_heart.jpg');
+await new Promise(r => setTimeout(r, 700)); // jeda dikit biar smooth
+await showSticker('https://clarkhoe77.github.io/MUK-TAKON/udud_dulu.jpg');
 }
 
 const startBtn=document.getElementById('startBtn');
@@ -385,6 +392,7 @@ startBtn.addEventListener('keyup',(ev)=>{ if(ev.key==='Enter'||ev.keyCode===13) 
 </script>
 </body>
 </html>
+
 
 
 
