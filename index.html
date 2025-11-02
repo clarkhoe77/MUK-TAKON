@@ -41,7 +41,6 @@ body{
 }
 
 /* === MOD: sticky header === */
-/* header tetap terlihat saat scroll, tapi masih berada di flow layout */
 .header{
   display:flex; align-items:center; justify-content:space-between;
   padding:var(--header-padding);
@@ -50,7 +49,6 @@ body{
   background: linear-gradient(90deg, rgba(62,160,255,0.08), rgba(255,110,199,0.05));
   box-shadow: var(--soft-glow);
   backdrop-filter: blur(4px);
-
   position: sticky;  /* <-- sticky */
   top: 12px;         /* jarak dari top viewport */
   z-index: 50;       /* pastikan di atas chat bubbles */
@@ -130,8 +128,7 @@ body{
   100%{opacity:0; transform:scale(0.8)}
 }
 
-/* === chat area ===
-   buat chat-area fleksibel dan scrolly; header sticky akan tetap di atas */
+/* === chat area === */
 .chat-area{
   flex:1;
   margin-top:6px;
@@ -149,7 +146,7 @@ body{
 .chat-area::-webkit-scrollbar { height:8px; width:8px; }
 .chat-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.05); border-radius:8px; }
 
-/* bubble styles (unchanged mostly) */
+/* bubble styles */
 .bubble{
   padding:12px 16px;
   max-width:76%;
@@ -242,23 +239,21 @@ body{
 
 /* === ADDITIONAL MOBILE LAYOUT (judul & subtitle wrap, sticker pos) === */
 @media (max-width:600px) {
-  @media (max-width:600px) {
   .header{
     flex-direction:row;
     align-items:center;
     gap:8px;
     padding:10px;
   }
-  /* judul bisa wrap tapi tetap responsive */
   .header h1{
-    font-size: clamp(14px, 4vw, 22px); /* responsive, tapi wrap */
+    font-size: clamp(14px, 4vw, 22px);
     white-space: normal;
     overflow:visible;
-    max-width: calc(100% - 90px); /* sisakan ruang untuk sticker */
+    max-width: calc(100% - 90px);
     line-height:1.2;
   }
   .header p{
-    font-size: clamp(8px, 2.5vw, 10px); /* responsive */
+    font-size: clamp(8px, 2.5vw, 10px);
     white-space: normal;
     overflow:visible;
     max-width: calc(100% - 90px);
@@ -280,6 +275,40 @@ body{
   position:fixed; bottom:0; left:0; width:100%; height:120px;
   background: radial-gradient(circle at center, rgba(120,80,200,0.12), transparent 40%);
   pointer-events:none; z-index:1;
+}
+
+/* ===== FULL FRAME FIX: hilangkan semua scroll ===== */
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* hapus scroll horizontal & vertikal */
+}
+
+.panel {
+  height: 100vh; /* panel full tinggi viewport */
+  max-width: 100%; /* lebar penuh di layar */
+}
+
+.chat-area {
+  flex: 1;
+  overflow: hidden; /* scroll hilang */
+  height: auto;
+  max-height: calc(100vh - 260px); /* header + start row + signature kira-kira 260px */
+}
+
+/* sticker & bubble otomatis fit di layar */
+.bubble, .bubble.sticker-popup {
+  max-height: 80vh; /* pastikan ga ngelebihin layar */
+  max-width: 90%; 
+  word-break: break-word;
+  overflow: hidden;
+}
+
+/* sticker besar auto scale */
+.bubble.sticker-popup img {
+  max-height: 60vh;
+  max-width: 100%;
+  object-fit: contain;
 }
 </style>
 </head>
@@ -392,7 +421,6 @@ async function showBubble(obj){
   signature.scrollIntoView({behavior:'smooth', block:'end'});
 }
 
-/* show sticker without waiting for load to avoid freezing UI */
 async function showSticker(url) {
   return new Promise(resolve => {
     const d = document.createElement('div');
@@ -439,17 +467,15 @@ startBtn.addEventListener('click',async function(){
 
 startBtn.addEventListener('keyup',(ev)=>{ if(ev.key==='Enter'||ev.keyCode===13) startBtn.click(); });
 
-/* Small enhancement: when new bubble added, make sure header still visible on small screens */
 const headerEl = document.getElementById('header');
 const observer = new MutationObserver(() => {
-  // when content changes, ensure header stays in view if near top
-  // scroll only chat area to bottom; header is sticky so will remain visible
   chatArea.scrollTop = chatArea.scrollHeight;
 });
 observer.observe(chatArea, { childList: true, subtree: true });
 </script>
 </body>
 </html>
+
 
 
 
