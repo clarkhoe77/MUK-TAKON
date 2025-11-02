@@ -16,9 +16,12 @@
   --title-pink:#ff66b2;
   --start-text:#ffd400;
   --soft-glow:0 0 18px rgba(255,110,199,0.14),0 0 36px rgba(62,160,255,0.08);
+  --header-padding:14px;
 }
+
+/* reset */
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%; overflow:hidden;}
+html,body{height:100%; -webkit-font-smoothing:antialiased;}
 body{
   font-family:'Press Start 2P',"Cascadia Mono",monospace;
   background: radial-gradient(circle at center, var(--bg-center) 0%, #36003a 30%, var(--bg-edge) 100%);
@@ -26,60 +29,69 @@ body{
   min-height:100vh; padding:0;
   color:#fff;
 }
+
+/* panel jadi flex column; header ada di atas, chat-area flex-grow */
 .panel{
   width:100%;
+  max-width:960px;
   height:100vh;
   display:flex; flex-direction:column;
   gap:10px;
   padding:12px;
 }
+
+/* === MOD: sticky header === */
+/* header tetap terlihat saat scroll, tapi masih berada di flow layout */
 .header{
   display:flex; align-items:center; justify-content:space-between;
-  padding:14px;
+  padding:var(--header-padding);
   border-radius:20px;
   border:3px solid rgba(102,208,255,0.14);
   background: linear-gradient(90deg, rgba(62,160,255,0.08), rgba(255,110,199,0.05));
   box-shadow: var(--soft-glow);
   backdrop-filter: blur(4px);
-  position:sticky;
-  top:0;
-  z-index:10;
+
+  position: sticky;  /* <-- sticky */
+  top: 12px;         /* jarak dari top viewport */
+  z-index: 50;       /* pastikan di atas chat bubbles */
 }
-.header .left{
-  display:flex; flex-direction:column; gap:6px;
-  min-width:0;
-}
+
+/* responsive font sizing using clamp */
 .header h1{
-  font-size:22px;
+  font-size: clamp(16px, 2.2vw, 22px);
   color:var(--title-pink);
   margin:0;
   line-height:1;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
+  max-width: 58ch;
 }
 .header p{
-  font-size:10px;
+  font-size: clamp(8px, 1.6vw, 10px);
   color:#fff;
   margin:0;
   opacity:0.95;
   display:inline-block;
-  padding:4px 6px;
+  padding:6px 8px;
   border-radius:8px;
   border:2px solid rgba(62,160,255,0.12);
   background: rgba(0,0,0,0.12);
-  max-width:70%;
+  white-space:nowrap;
+  max-width: 36ch;
   overflow:hidden;
   text-overflow:ellipsis;
-  white-space:nowrap;
 }
 .header .hdr-sticker{
-  width:80px; height:80px; border-radius:12px; overflow:hidden; flex-shrink:0;
+  width:120px; height:120px; border-radius:12px; overflow:hidden; flex-shrink:0;
   display:flex; align-items:center; justify-content:center;
   background: rgba(255,255,255,0.02);
   margin-left:12px;
+  z-index:60; /* sticker di atas header juga */
 }
 .header .hdr-sticker img{ width:100%; height:100%; object-fit:contain; display:block; }
+
+/* start button area */
 .start-row{
   display:flex; justify-content:flex-end;
 }
@@ -97,6 +109,8 @@ body{
 }
 #startBtn:active{ transform: translateY(1px); }
 #startBtn.hidden{ display:none; }
+
+/* loading dots */
 .loading{
   display:flex; gap:6px; align-items:center; justify-content:center;
   margin-top:8px;
@@ -115,6 +129,9 @@ body{
   80%{opacity:0.4; transform:scale(0.9)}
   100%{opacity:0; transform:scale(0.8)}
 }
+
+/* === chat area ===
+   buat chat-area fleksibel dan scrolly; header sticky akan tetap di atas */
 .chat-area{
   flex:1;
   margin-top:6px;
@@ -124,8 +141,15 @@ body{
   border-radius:12px;
   background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
   overflow-y:auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 }
-.chat-area::-webkit-scrollbar { display:none; }
+
+/* hide scrollbar on webkit but still scrollable */
+.chat-area::-webkit-scrollbar { height:8px; width:8px; }
+.chat-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.05); border-radius:8px; }
+
+/* bubble styles (unchanged mostly) */
 .bubble{
   padding:12px 16px;
   max-width:76%;
@@ -167,6 +191,8 @@ body{
   content:""; position:absolute; left:-6px; top:0; width:6px; height:100%;
   border-radius:6px; box-shadow:0 0 10px rgba(62,160,255,0.12);
 }
+
+/* cursor animation in bubbles */
 .cursor{
   display:inline-block; width:8px; height:18px; margin-left:6px; vertical-align:bottom;
   animation: blink-caret 900ms steps(1) infinite;
@@ -174,6 +200,8 @@ body{
 .bubble.me .cursor{ background:var(--me-color); }
 .bubble.them .cursor{ background:var(--them-color); }
 @keyframes blink-caret{50%{opacity:0;}}
+
+/* sticker popup bubble */
 .bubble.sticker-popup{
   position: relative;
   align-self:flex-end;
@@ -195,13 +223,52 @@ body{
   object-fit:contain;
   border-radius:12px;
 }
-@media(max-width:520px){
-  .header h1{ font-size:18px; }
-  .header p{ font-size:9px; max-width:60%; }
-  .header .hdr-sticker{ width:60px; height:60px; }
-  .bubble.sticker-popup{ width:75%; max-width:180px; }
+@keyframes popSticker {
+  0% { transform: scale(0); opacity:0; }
+  60% { transform: scale(1.1); opacity:1; }
+  100% { transform: scale(1); opacity:1; }
 }
-@keyframes popSticker {0%{transform:scale(0);opacity:0}60%{transform:scale(1.1);opacity:1}100%{transform:scale(1);opacity:1}}
+
+/* small screen tweaks */
+@media(max-width:520px){
+  .panel{ padding:6px; }
+  .header .hdr-sticker{ width:50px; height:50px; }
+  .chat-area{ min-height:200px; padding:6px; }
+  .bubble.sticker-popup{
+    width:75%;
+    max-width:180px;
+  }
+}
+
+/* === ADDITIONAL MOBILE LAYOUT (judul & subtitle wrap, sticker pos) === */
+@media (max-width:600px) {
+  .header{
+    flex-direction:row;
+    align-items:center;
+    gap:8px;
+    padding:10px;
+  }
+  /* buat judul bisa wrap dan lebih kecil */
+  .header h1{
+    font-size:16px;
+    white-space:normal;
+    overflow:visible;
+    max-width: calc(100% - 100px); /* sisakan ruang untuk sticker */
+  }
+  .header p{
+    font-size:9px;
+    white-space:normal;
+    overflow:visible;
+    max-width: calc(100% - 100px);
+    margin-top:6px;
+  }
+  .header .hdr-sticker{
+    width:70px; height:70px;
+    margin-left:8px;
+  }
+}
+
+/* signature & footer */
 .signature{
   margin-top:8px; text-align:right; color:#cfcfcf; font-size:10px;
   opacity:0.85;
@@ -216,7 +283,7 @@ body{
 <body>
 <div class="panel">
   <div class="header" id="header">
-    <div class="left">
+    <div class="left" style="min-width:0;">
       <h1 id="mainTitle">MAU_NANYEAK</h1>
       <p id="subTitle">#gengsi_dikit_ga_ngaruh_uhuhkk_uohhokk_keselek_karburator</p>
     </div>
@@ -224,17 +291,22 @@ body{
       <img id="stickerImg" src="https://clarkhoe77.github.io/MUK-TAKON/baca_goblog_baca_dari_atas.jpeg" alt="sticker">
     </div>
   </div>
+
   <div class="start-row">
     <button id="startBtn">PENCET DULU BOS</button>
   </div>
+
   <div class="loading" id="loading" style="display:none; margin-top:6px;">
     <div class="dot a"></div>
     <div class="dot b"></div>
     <div class="dot c"></div>
   </div>
+
   <div class="chat-area" id="chatArea"></div>
+
   <div class="signature" id="signature">ditulis pakai kaki oleh clark</div>
 </div>
+
 <div class="footer-gradient"></div>
 
 <script>
@@ -244,7 +316,6 @@ function initAudio(){ if(audioCtx) return; audioCtx=new (window.AudioContext||wi
 function playClick(time=0){ if(!audioCtx) initAudio(); const now=audioCtx.currentTime+time; const o=audioCtx.createOscillator(); const g=audioCtx.createGain(); o.type='square'; o.frequency.setValueAtTime(1200,now); g.gain.setValueAtTime(0.0001,now); g.gain.exponentialRampToValueAtTime(0.06,now+0.001); g.gain.exponentialRampToValueAtTime(0.0001,now+0.09); o.connect(g); g.connect(audioCtx.destination); o.start(now); o.stop(now+0.11); }
 function playTuing(){ if(!audioCtx) initAudio(); const now=audioCtx.currentTime; const o=audioCtx.createOscillator(); const g=audioCtx.createGain(); o.type='sine'; o.frequency.setValueAtTime(1000,now); g.gain.setValueAtTime(0.001,now); g.gain.exponentialRampToValueAtTime(0.12,now+0.02); g.gain.exponentialRampToValueAtTime(0.0001,now+0.35); o.connect(g); g.connect(audioCtx.destination); o.start(now); o.stop(now+0.38); }
 
-// ===== messages =====
 const messages = [
   {who:'me', text:`Aloo, ini uda mati apa belomm yh`},
   {who:'them', text:`...`},
@@ -252,7 +323,7 @@ const messages = [
   {who:'me', text:`Aku cuma ngerasa gak enak aja, kesannya kayak aku gak dihargain sebagai seonggok manusia, walaupun aslinya bidadari yahh.`},
   {who:'them', text:`hmmmm`},
   {who:'me', text:`Yuyur gwa kesel. Soalnya ini tuh rasanya kayak orang disuapin makan tiap hari, terus tiba-tiba yang nyuruh ilang gitu aja. Yaa aneh aja.`},
-  {who:'me', text:`Bukan karena aku baper. Aku gak munafik, aku emang suka dan enjoy sama suasana yang kamu kasih. Bukan dalam hal cinta cintaan alay yaa, tapi aku ngerasa nyambung dan positif ngobrol sama kamu, kayak aku sama ralisha.`},
+  {who:'me', text:`Bukan karena aku baper. Aku gak munafik, aku emang suka dan enjoy sama suasana yang kamu kasi. Bukan dalam hal cinta cintaan alay yaa, tapi aku ngerasa nyambung dan positif ngobrol sama kamu, kayak aku sama ralisha.`},
   {who:'them', text:`yakinnn deckk`},
   {who:'me', text:`Aku cuma pengen tau. Soalnya jujur aja, tiba-tiba ngilang gitu tuh bikin bingung. Kalau kamu gak nyaman, lagi ada masalah yang gabisa kamu omongin, atau ngerasa aku terlalu banyak ngomong, atau risih sama hal-hal yang aku lakuin (kurang ajarr tapi yaa bener juga sih), bilang aja gak papa.`},
   {who:'me', text:`Atau mungkin kamu ngerasa risih karena kamu pernah bilang “aku bingung kalo dipojokin gini marr", atau "aku jadi gak enak sama kamu.”`},
@@ -277,40 +348,107 @@ const messages = [
 ];
 
 const chatArea=document.getElementById('chatArea');
-const loading=document.getElementById('loading');
-const startBtn=document.getElementById('startBtn');
+const signature=document.getElementById('signature');
 
-startBtn.addEventListener('click',()=>{
-  startBtn.classList.add('hidden');
-  loading.style.display='flex';
-  setTimeout(()=>{
-    loading.style.display='none';
-    let delay=0;
-    messages.forEach((m,i)=>{
-      setTimeout(()=>{
-        const div=document.createElement('div');
-        div.className='bubble '+m.who;
-        div.textContent=m.text;
-        chatArea.appendChild(div);
-        chatArea.scrollTop=chatArea.scrollHeight;
-        if(i===messages.length-1){
-          // popup sticker di bubble terakhir
-          const stickerDiv=document.createElement('div');
-          stickerDiv.className='bubble sticker-popup';
-          const img=document.createElement('img');
-          img.src='https://clarkhoe77.github.io/MUK-TAKON/nyeri_heart.jpg';
-          stickerDiv.appendChild(img);
-          chatArea.appendChild(stickerDiv);
-          chatArea.scrollTop=chatArea.scrollHeight;
-        }
-      },delay);
-      delay+=700;
-    });
-  },600);
+function createBubble(obj){
+  const d=document.createElement('div');
+  d.className='bubble '+obj.who;
+  d.innerHTML='<span class="content"></span>';
+  return d;
+}
+
+async function typeWithPause(bubbleEl,text){
+  const content=bubbleEl.querySelector('.content');
+  const segments=text.split(/([.!?]\s)/g);
+  for(let i=0;i<segments.length;i++){
+    const segment=segments[i];
+    for(let j=0;j<segment.length;j++){
+      content.textContent+=segment[j];
+      if(Math.random()<0.35) playClick();
+      chatArea.scrollTop=chatArea.scrollHeight;
+      signature.scrollIntoView({behavior:'smooth', block:'end'});
+      await new Promise(r=>setTimeout(r, Math.floor(Math.random()*36)+22));
+    }
+    const cursor=document.createElement('span');
+    cursor.className='cursor';
+    content.appendChild(cursor);
+    await new Promise(r=>setTimeout(r,1200+Math.random()*1800));
+    cursor.remove();
+  }
+}
+
+async function showBubble(obj){
+  const bubble=createBubble(obj);
+  chatArea.appendChild(bubble);
+  playTuing();
+  bubble.classList.add('pop');
+  await new Promise(r=>setTimeout(r,100));
+  bubble.classList.add('show');
+  await typeWithPause(bubble,obj.text);
+  chatArea.scrollTop=chatArea.scrollHeight;
+  signature.scrollIntoView({behavior:'smooth', block:'end'});
+}
+
+/* show sticker without waiting for load to avoid freezing UI */
+async function showSticker(url) {
+  return new Promise(resolve => {
+    const d = document.createElement('div');
+    d.className = 'bubble sticker-popup';
+    const img = document.createElement('img');
+    img.src = url;
+
+    d.appendChild(img);
+    chatArea.appendChild(d);
+    chatArea.scrollTop = chatArea.scrollHeight;
+    signature.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+    img.style.opacity = '0';
+    img.style.transition = 'opacity 0.4s ease';
+    requestAnimationFrame(() => { img.style.opacity = '1'; });
+
+    img.onload = () => resolve();
+    img.onerror = () => resolve();
+  });
+}
+
+async function runSequence(){
+  for(let i=0;i<messages.length;i++){
+    await showBubble(messages[i]);
+    await new Promise(r=>setTimeout(r, Math.floor(Math.random()*1200)+800));
+  }
+  await showSticker('https://clarkhoe77.github.io/MUK-TAKON/nyeri_heart.jpg');
+  await new Promise(r => setTimeout(r, 700));
+  await showSticker('https://clarkhoe77.github.io/MUK-TAKON/udud_dulu.jpg');
+}
+
+const startBtn=document.getElementById('startBtn');
+const loadingEl=document.getElementById('loading');
+
+startBtn.addEventListener('click',async function(){
+  startBtn.disabled=true;
+  startBtn.classList.add('hidden'); // hide start button
+  loadingEl.style.display='flex';
+  playTuing();
+  await new Promise(r=>setTimeout(r,3000));
+  loadingEl.style.display='none';
+  try{ await runSequence(); }catch(e){ console.error(e); }
 });
+
+startBtn.addEventListener('keyup',(ev)=>{ if(ev.key==='Enter'||ev.keyCode===13) startBtn.click(); });
+
+/* Small enhancement: when new bubble added, make sure header still visible on small screens */
+const headerEl = document.getElementById('header');
+const observer = new MutationObserver(() => {
+  // when content changes, ensure header stays in view if near top
+  // scroll only chat area to bottom; header is sticky so will remain visible
+  chatArea.scrollTop = chatArea.scrollHeight;
+});
+observer.observe(chatArea, { childList: true, subtree: true });
 </script>
 </body>
 </html>
+
+
 
 
 
