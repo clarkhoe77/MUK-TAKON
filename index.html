@@ -66,6 +66,7 @@ body{
   border-radius:8px;
   border:2px solid rgba(62,160,255,0.12);
   background: rgba(0,0,0,0.12);
+  white-space: normal; /* wrap otomatis */
 }
 .header .hdr-sticker{
   width:120px; height:120px; border-radius:12px; overflow:hidden; flex-shrink:0;
@@ -180,23 +181,7 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  overflow:hidden;
-  animation: popSticker 0.4s ease forwards;
-}
-.bubble.sticker-popup{
-  position: relative;
-  align-self:flex-end;
-  border-color: rgba(255,110,199,0.28);
-  background: rgba(255,110,199,0.18);
-  padding:6px;
-  width: 55%;
-  max-width: 260px;
-  border-radius:12px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  /* hilangkan overflow:hidden supaya gambar full */
-  overflow:visible;
+  overflow:visible; /* full sticker */
   animation: popSticker 0.4s ease forwards;
 }
 .bubble.sticker-popup img{
@@ -204,12 +189,6 @@ body{
   height:auto;     /* tinggi proporsional */
   object-fit:contain; /* gambar gak nge-stretch */
   border-radius:12px;
-}
-@media(max-width:520px){
-  .bubble.sticker-popup{
-    width:75%;
-    max-width:180px;
-  }
 }
 @keyframes popSticker {
   0% { transform: scale(0); opacity:0; }
@@ -233,6 +212,9 @@ body{
     width:75%;
     max-width:180px;
   }
+  .header{ flex-wrap:wrap; }
+  .header .left h1{ font-size:18px; }
+  .header .left p{ font-size:8.5px; white-space:normal; }
 }
 </style>
 </head>
@@ -323,7 +305,7 @@ async function typeWithPause(bubbleEl,text){
     const cursor=document.createElement('span');
     cursor.className='cursor';
     content.appendChild(cursor);
-    await new Promise(r=>setTimeout(r,1200+Math.random()*1800));
+    await new Promise(r=>setTimeout(r, 1200+Math.random()*1800));
     cursor.remove();
   }
 }
@@ -346,19 +328,13 @@ async function showSticker(url) {
     d.className = 'bubble sticker-popup';
     const img = document.createElement('img');
     img.src = url;
-
-    // langsung append biar gak nunggu load baru render
     d.appendChild(img);
     chatArea.appendChild(d);
     chatArea.scrollTop = chatArea.scrollHeight;
     signature.scrollIntoView({ behavior: 'smooth', block: 'end' });
-
-    // fade-in halus biar gak “pop kasar”
     img.style.opacity = '0';
     img.style.transition = 'opacity 0.4s ease';
     requestAnimationFrame(() => { img.style.opacity = '1'; });
-
-    // kalo load-nya kelar atau error, lanjut aja biar ga freeze
     img.onload = () => resolve();
     img.onerror = () => resolve();
   });
@@ -369,10 +345,9 @@ async function runSequence(){
     await showBubble(messages[i]);
     await new Promise(r=>setTimeout(r, Math.floor(Math.random()*1200)+800));
   }
-  // tampilkan sticker pop-up berurutan
-await showSticker('https://clarkhoe77.github.io/MUK-TAKON/nyeri_heart.jpg');
-await new Promise(r => setTimeout(r, 700)); // jeda dikit biar smooth
-await showSticker('https://clarkhoe77.github.io/MUK-TAKON/udud_dulu.jpg');
+  await showSticker('https://clarkhoe77.github.io/MUK-TAKON/nyeri_heart.jpg');
+  await new Promise(r => setTimeout(r, 700));
+  await showSticker('https://clarkhoe77.github.io/MUK-TAKON/udud_dulu.jpg');
 }
 
 const startBtn=document.getElementById('startBtn');
@@ -380,7 +355,7 @@ const loadingEl=document.getElementById('loading');
 
 startBtn.addEventListener('click',async function(){
   startBtn.disabled=true;
-  startBtn.classList.add('hidden'); // hide start button
+  startBtn.classList.add('hidden');
   loadingEl.style.display='flex';
   playTuing();
   await new Promise(r=>setTimeout(r,3000));
@@ -392,6 +367,8 @@ startBtn.addEventListener('keyup',(ev)=>{ if(ev.key==='Enter'||ev.keyCode===13) 
 </script>
 </body>
 </html>
+
+
 
 
 
