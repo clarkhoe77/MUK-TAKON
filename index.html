@@ -21,12 +21,12 @@
 
 /* reset */
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%; -webkit-font-smoothing:antialiased;}
+html,body{height:100%; width:100%; -webkit-font-smoothing:antialiased; overflow:hidden;}
 body{
   font-family:'Press Start 2P',"Cascadia Mono",monospace;
   background: radial-gradient(circle at center, var(--bg-center) 0%, #36003a 30%, var(--bg-edge) 100%);
   display:flex; justify-content:center; align-items:flex-start;
-  min-height:100vh; padding:0;
+  min-height:100vh;
   color:#fff;
 }
 
@@ -42,16 +42,16 @@ body{
 
 /* === MOD: sticky header === */
 .header{
-  display:flex; align-items:center; justify-content:space-between;
+  display:flex; align-items:flex-start; justify-content:space-between;
   padding:var(--header-padding);
   border-radius:20px;
   border:3px solid rgba(102,208,255,0.14);
   background: linear-gradient(90deg, rgba(62,160,255,0.08), rgba(255,110,199,0.05));
   box-shadow: var(--soft-glow);
   backdrop-filter: blur(4px);
-  position: sticky;  /* <-- sticky */
-  top: 12px;         /* jarak dari top viewport */
-  z-index: 50;       /* pastikan di atas chat bubbles */
+  position: sticky;
+  top:12px;
+  z-index:50;
 }
 
 /* responsive font sizing using clamp */
@@ -59,33 +59,33 @@ body{
   font-size: clamp(16px, 2.2vw, 22px);
   color:var(--title-pink);
   margin:0;
-  line-height:1;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  max-width: 58ch;
+  line-height:1.1;
+  white-space:normal;
+  overflow:visible;
+  word-wrap:break-word;
 }
 .header p{
   font-size: clamp(8px, 1.6vw, 10px);
   color:#fff;
-  margin:0;
+  margin:4px 0 0 0;
   opacity:0.95;
   display:inline-block;
   padding:6px 8px;
   border-radius:8px;
   border:2px solid rgba(62,160,255,0.12);
   background: rgba(0,0,0,0.12);
-  white-space:nowrap;
-  max-width: 36ch;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  white-space:normal;
+  overflow:visible;
+  word-wrap:break-word;
 }
+
+/* sticker di header */
 .header .hdr-sticker{
   width:120px; height:120px; border-radius:12px; overflow:hidden; flex-shrink:0;
   display:flex; align-items:center; justify-content:center;
   background: rgba(255,255,255,0.02);
   margin-left:12px;
-  z-index:60; /* sticker di atas header juga */
+  z-index:60;
 }
 .header .hdr-sticker img{ width:100%; height:100%; object-fit:contain; display:block; }
 
@@ -131,7 +131,6 @@ body{
 /* === chat area === */
 .chat-area{
   flex:1;
-  margin-top:6px;
   display:flex; flex-direction:column; gap:12px;
   width:100%;
   padding:12px 8px;
@@ -163,42 +162,13 @@ body{
   border-color: rgba(255,110,199,0.28);
   color: var(--me-color);
   border-top-right-radius:22px;
-  animation: neonBlinkMe 1.5s infinite alternate;
 }
 .bubble.them{
   align-self:flex-start;
   border-color: rgba(62,160,255,0.28);
   color: var(--them-color);
   border-top-left-radius:22px;
-  animation: neonBlinkThem 1.5s infinite alternate;
 }
-@keyframes neonBlinkMe{
-  0%,100%{ box-shadow:0 0 12px rgba(255,110,199,0.2),0 0 22px rgba(255,110,199,0.1);}
-  50%{ box-shadow:0 0 18px rgba(255,110,199,0.35),0 0 28px rgba(255,110,199,0.15);}
-}
-@keyframes neonBlinkThem{
-  0%,100%{ box-shadow:0 0 12px rgba(62,160,255,0.2),0 0 22px rgba(62,160,255,0.1);}
-  50%{ box-shadow:0 0 18px rgba(62,160,255,0.35),0 0 28px rgba(62,160,255,0.15);}
-}
-.bubble.me::after{
-  content:""; position:absolute; right:-6px; top:0; width:6px; height:100%;
-  border-radius:6px; box-shadow:0 0 10px rgba(255,110,199,0.12);
-}
-.bubble.them::after{
-  content:""; position:absolute; left:-6px; top:0; width:6px; height:100%;
-  border-radius:6px; box-shadow:0 0 10px rgba(62,160,255,0.12);
-}
-
-/* cursor animation in bubbles */
-.cursor{
-  display:inline-block; width:8px; height:18px; margin-left:6px; vertical-align:bottom;
-  animation: blink-caret 900ms steps(1) infinite;
-}
-.bubble.me .cursor{ background:var(--me-color); }
-.bubble.them .cursor{ background:var(--them-color); }
-@keyframes blink-caret{50%{opacity:0;}}
-
-/* sticker popup bubble */
 .bubble.sticker-popup{
   position: relative;
   align-self:flex-end;
@@ -212,7 +182,6 @@ body{
   justify-content:center;
   align-items:center;
   overflow:visible;
-  animation: popSticker 0.4s ease forwards;
 }
 .bubble.sticker-popup img{
   width:100%;
@@ -220,49 +189,25 @@ body{
   object-fit:contain;
   border-radius:12px;
 }
-@keyframes popSticker {
-  0% { transform: scale(0); opacity:0; }
-  60% { transform: scale(1.1); opacity:1; }
-  100% { transform: scale(1); opacity:1; }
-}
 
 /* small screen tweaks */
-@media(max-width:520px){
-  .panel{ padding:6px; }
-  .header .hdr-sticker{ width:50px; height:50px; }
-  .chat-area{ min-height:200px; padding:6px; }
-  .bubble.sticker-popup{
-    width:75%;
-    max-width:180px;
-  }
-}
-
-/* === ADDITIONAL MOBILE LAYOUT (judul & subtitle wrap, sticker pos) === */
-@media (max-width:600px) {
+@media(max-width:600px){
   .header{
     flex-direction:row;
-    align-items:center;
+    align-items:flex-start;
     gap:8px;
     padding:10px;
   }
-  .header h1{
-    font-size: clamp(14px, 4vw, 22px);
-    white-space: normal;
-    overflow:visible;
+  .header h1, .header p{
     max-width: calc(100% - 90px);
-    line-height:1.2;
-  }
-  .header p{
-    font-size: clamp(8px, 2.5vw, 10px);
-    white-space: normal;
-    overflow:visible;
-    max-width: calc(100% - 90px);
-    margin-top:4px;
-    line-height:1.2;
   }
   .header .hdr-sticker{
     width:70px; height:70px;
     margin-left:8px;
+  }
+  .bubble.sticker-popup{
+    width:75%;
+    max-width:180px;
   }
 }
 
@@ -275,40 +220,6 @@ body{
   position:fixed; bottom:0; left:0; width:100%; height:120px;
   background: radial-gradient(circle at center, rgba(120,80,200,0.12), transparent 40%);
   pointer-events:none; z-index:1;
-}
-
-/* ===== FULL FRAME FIX: hilangkan semua scroll ===== */
-html, body {
-  height: 100%;
-  width: 100%;
-  overflow: hidden; /* hapus scroll horizontal & vertikal */
-}
-
-.panel {
-  height: 100vh; /* panel full tinggi viewport */
-  max-width: 100%; /* lebar penuh di layar */
-}
-
-.chat-area {
-  flex: 1;
-  overflow: hidden; /* scroll hilang */
-  height: auto;
-  max-height: calc(100vh - 260px); /* header + start row + signature kira-kira 260px */
-}
-
-/* sticker & bubble otomatis fit di layar */
-.bubble, .bubble.sticker-popup {
-  max-height: 80vh; /* pastikan ga ngelebihin layar */
-  max-width: 90%; 
-  word-break: break-word;
-  overflow: hidden;
-}
-
-/* sticker besar auto scale */
-.bubble.sticker-popup img {
-  max-height: 60vh;
-  max-width: 100%;
-  object-fit: contain;
 }
 </style>
 </head>
@@ -475,6 +386,7 @@ observer.observe(chatArea, { childList: true, subtree: true });
 </script>
 </body>
 </html>
+
 
 
 
