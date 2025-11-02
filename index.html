@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>NANYA DOANG // Full Frame + Cursor Blinking</title>
+<title>NANYA DOANG BUKAN NAKSIR BUKAN SULAP BUKAN SIHIR (Start)</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
@@ -16,24 +16,27 @@
   --title-pink:#ff66b2;
   --start-text:#ffd400;
   --soft-glow:0 0 18px rgba(255,110,199,0.14),0 0 36px rgba(62,160,255,0.08);
-  --header-padding:14px;
 }
 
 /* reset */
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;width:100%; -webkit-font-smoothing:antialiased; overflow:hidden;}
+html,body{height:100%; -webkit-font-smoothing:antialiased;}
 body{
   font-family:'Press Start 2P',"Cascadia Mono",monospace;
   background: radial-gradient(circle at center, var(--bg-center) 0%, #36003a 30%, var(--bg-edge) 100%);
   display:flex; justify-content:center; align-items:flex-start;
   min-height:100vh; padding:0;
   color:#fff;
+  overflow:hidden; /* full frame */
 }
 
-/* panel full frame */
 .panel{
-  width:100%; max-width:100%; height:100vh;
-  display:flex; flex-direction:column; gap:10px; padding:12px;
+  width:100%;
+  max-width:960px;
+  height:100vh;
+  display:flex; flex-direction:column;
+  gap:10px;
+  padding:12px;
 }
 
 /* sticky header */
@@ -43,7 +46,7 @@ body{
   border-radius:24px;
   border:3px solid rgba(102,208,255,0.14);
   background: linear-gradient(90deg, rgba(62,160,255,0.08), rgba(255,110,199,0.05));
-  box-shadow: 0 0 18px rgba(255,110,199,0.14),0 0 36px rgba(62,160,255,0.08);
+  box-shadow: var(--soft-glow);
   backdrop-filter: blur(4px);
   position: sticky;
   top: 12px;
@@ -87,9 +90,7 @@ body{
 .header .hdr-sticker img{ width:100%; height:100%; object-fit:contain; display:block; }
 
 /* start button */
-.start-row{
-  display:flex; justify-content:flex-end;
-}
+.start-row{ display:flex; justify-content:flex-end; }
 #startBtn{
   font-family: 'Press Start 2P', monospace;
   font-size:12px;
@@ -106,10 +107,7 @@ body{
 #startBtn.hidden{ display:none; }
 
 /* loading dots */
-.loading{
-  display:flex; gap:6px; align-items:center; justify-content:center;
-  margin-top:8px;
-}
+.loading{ display:flex; gap:6px; align-items:center; justify-content:center; margin-top:8px; }
 .loading .dot{
   width:12px; height:12px; border-radius:50%;
   opacity:0; transform:scale(0.8);
@@ -127,17 +125,23 @@ body{
 
 /* chat area */
 .chat-area{
-  flex:1; margin-top:6px; display:flex; flex-direction:column; gap:12px;
-  width:100%; padding:12px 8px; border-radius:12px;
+  flex:1;
+  margin-top:6px;
+  display:flex; flex-direction:column; gap:12px;
+  width:100%;
+  padding:12px 8px;
+  border-radius:12px;
   background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
-  overflow-y:auto; -webkit-overflow-scrolling: touch; scroll-behavior: smooth;
+  overflow-y:auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 }
 
-/* hide scrollbar on webkit */
-.chat-area::-webkit-scrollbar { height:8px; width:8px; }
+/* hide scrollbar */
+.chat-area::-webkit-scrollbar { width:8px; height:8px; }
 .chat-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.05); border-radius:8px; }
 
-/* bubble */
+/* bubbles */
 .bubble{
   padding:12px 16px;
   max-width:76%;
@@ -180,16 +184,16 @@ body{
   border-radius:6px; box-shadow:0 0 10px rgba(62,160,255,0.12);
 }
 
-/* cursor */
+/* cursor blinking random tiap klimatan */
 .cursor{
   display:inline-block; width:8px; height:18px; margin-left:6px; vertical-align:bottom;
-  animation: blink-caret 900ms steps(1) infinite;
+  animation: blink-caret 0.9s steps(1) infinite;
 }
 .bubble.me .cursor{ background:var(--me-color); }
 .bubble.them .cursor{ background:var(--them-color); }
 @keyframes blink-caret{50%{opacity:0;}}
 
-/* sticker */
+/* sticker popup */
 .bubble.sticker-popup{
   position: relative;
   align-self:flex-end;
@@ -217,9 +221,10 @@ body{
   100% { transform: scale(1); opacity:1; }
 }
 
-/* responsive */
+/* small screen */
 @media(max-width:600px){
-  .header h1,.header p{ max-width: calc(100% - 90px); }
+  .header h1{ font-size: clamp(18px,5vw,24px); }
+  .header p{ font-size: clamp(10px,3.5vw,14px); }
   .header .hdr-sticker{ width:70px; height:70px; }
   .bubble.sticker-popup{ width:75%; max-width:180px; }
 }
@@ -387,6 +392,7 @@ observer.observe(chatArea,{childList:true, subtree:true});
 </script>
 </body>
 </html>
+
 
 
 
