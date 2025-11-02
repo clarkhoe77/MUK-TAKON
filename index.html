@@ -39,47 +39,50 @@ body{
 /* sticky header */
 .header{
   display:flex; align-items:center; justify-content:space-between;
-  padding:var(--header-padding);
-  border-radius:20px;
+  padding:24px;
+  border-radius:24px;
   border:3px solid rgba(102,208,255,0.14);
   background: linear-gradient(90deg, rgba(62,160,255,0.08), rgba(255,110,199,0.05));
-  box-shadow: var(--soft-glow);
+  box-shadow: 0 0 18px rgba(255,110,199,0.14),0 0 36px rgba(62,160,255,0.08);
   backdrop-filter: blur(4px);
   position: sticky;
   top: 12px;
-  z-index:50;
+  z-index: 50;
   flex-wrap:wrap;
 }
 
 .header h1{
-  font-size: clamp(16px, 2.2vw, 22px);
+  font-size: clamp(20px, 4vw, 28px);
   color:var(--title-pink);
+  margin:0;
   line-height:1.2;
-  max-width: calc(100% - 100px);
+  white-space:normal;
   overflow:visible;
-  white-space: normal;
+  max-width: calc(100% - 120px);
 }
 
 .header p{
-  font-size: clamp(8px, 1.6vw, 10px);
+  font-size: clamp(12px, 3vw, 16px);
   color:#fff;
-  margin-top:4px;
+  margin:0;
+  opacity:0.95;
+  display:inline-block;
   padding:6px 8px;
   border-radius:8px;
   border:2px solid rgba(62,160,255,0.12);
   background: rgba(0,0,0,0.12);
+  white-space:normal;
   overflow:visible;
-  white-space: normal;
-  max-width: calc(100% - 100px);
-  line-height:1.2;
+  max-width: calc(100% - 120px);
+  line-height:1.3;
 }
 
 .header .hdr-sticker{
-  width:80px; height:80px; border-radius:12px; overflow:hidden;
+  width:100px; height:100px; border-radius:12px; overflow:hidden; flex-shrink:0;
   display:flex; align-items:center; justify-content:center;
   background: rgba(255,255,255,0.02);
   margin-left:12px;
-  flex-shrink:0;
+  z-index:60;
 }
 .header .hdr-sticker img{ width:100%; height:100%; object-fit:contain; display:block; }
 
@@ -384,6 +387,7 @@ observer.observe(chatArea,{childList:true, subtree:true});
 </script>
 </body>
 </html>
+
 
 
 
