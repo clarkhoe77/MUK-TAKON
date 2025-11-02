@@ -242,25 +242,28 @@ body{
 
 /* === ADDITIONAL MOBILE LAYOUT (judul & subtitle wrap, sticker pos) === */
 @media (max-width:600px) {
+  @media (max-width:600px) {
   .header{
     flex-direction:row;
     align-items:center;
     gap:8px;
     padding:10px;
   }
-  /* buat judul bisa wrap dan lebih kecil */
+  /* judul bisa wrap tapi tetap responsive */
   .header h1{
-    font-size:16px;
-    white-space:normal;
+    font-size: clamp(14px, 4vw, 22px); /* responsive, tapi wrap */
+    white-space: normal;
     overflow:visible;
-    max-width: calc(100% - 100px); /* sisakan ruang untuk sticker */
+    max-width: calc(100% - 90px); /* sisakan ruang untuk sticker */
+    line-height:1.2;
   }
   .header p{
-    font-size:9px;
-    white-space:normal;
+    font-size: clamp(8px, 2.5vw, 10px); /* responsive */
+    white-space: normal;
     overflow:visible;
-    max-width: calc(100% - 100px);
-    margin-top:6px;
+    max-width: calc(100% - 90px);
+    margin-top:4px;
+    line-height:1.2;
   }
   .header .hdr-sticker{
     width:70px; height:70px;
@@ -447,6 +450,7 @@ observer.observe(chatArea, { childList: true, subtree: true });
 </script>
 </body>
 </html>
+
 
 
 
