@@ -282,8 +282,8 @@ const messages = [
   {who:'me', text:`Jadii yah temenku banyak, aku ga ketergantungan sama kamu. Cuma aku bukan tipe orang yang bisa cut off langsung kaya ga ada apa apa. Tapi kalo kamu mau, ya we're fine broww.`},
   {who:'me', text:`YAAH Chat sebelumnya diemin aja ya anjerr gausa dibales , tapi kalo yang ini ga dibales, bengkelmu aku bom.`},
   {who:'me', text:`Soalnya aku juga malu yaaaa jadi LAST CHAT, ohokk ohok ekhm. Yaa ini aku bersikap dewasa dan menurunkan gengsi makannya aku nanyaa`},
-  {who:'me', text:`Kalo kamu males baca, intine wae boz, 'aku gasuka didiemin, aku mau tau kenapa gitu. Kalo gasuka bilang aja jangan merasa ga enak karena akupun ga enak ngomong gini. DAN JANGAN BALES INI KALO TERPAKSA (tapii ya minimal bales kek anjer seleb, hp lu dicuri dek?)' dahh itu ajaa.`},
-  {who:'me', text:`Sekian. Terima kasih.`}
+  {who:'me', text:`Kalo kamu males baca, intine wae boz, 'aku gasuka didiemin, aku mau tau kenapa gitu. Kalo gasuka bilang aja jangan merasa ga enak karena akupun ga enak ngomong gini. DAN JANGAN BALES INI KALO TERPAKSA (tapii ya minimal bales kek anjer seleb, hp lu dicuri dek? ga dibales gua jejel lu pake knalpot brong)' dahh itu ajaa.`},
+  {who:'me', text:`Sekian. Hatur Nuhun.`}
 ];
 
 const chatArea=document.getElementById('chatArea');
@@ -349,7 +349,29 @@ const stickerList=[
   'https://clarkhoe77.github.io/MUK-TAKON/motivasi_lu.jpg',
   'https://clarkhoe77.github.io/MUK-TAKON/pada_seenaknya.jpg',
   'https://clarkhoe77.github.io/MUK-TAKON/sora_sori.jpg',
-  'https://clarkhoe77.github.io/MUK-TAKON/yang_sabar_dong.jpg'
+  'https://clarkhoe77.github.io/MUK-TAKON/yang_sabar_dong.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/anjing_lu.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/capek_nelen_sabar.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/cara_make_otak.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/colong_aja_hpnya.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/dadar_gulung.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/gak_dendam.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/gk_besti.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/ini_soal_hati.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/kapan_debut.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/keranjang_kuning.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/keyboard_kejual.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/klo_ga_ikhlas.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/lu_emng_kek_gini.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/malah_diem.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/php_skip.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/selang.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/seumur_umur.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/si_anjir.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/sini_ngomong_depan_gua.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/tega_bat_lu.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/yasin.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/udh_brp_kali.jpg'
 ];
 
 // ===== sticker random sequential with audio =====
@@ -357,7 +379,7 @@ async function showStickersSequential(){
   // audio dari Pixabay
   const pixabayAudio = new Audio('https://clarkhoe77.github.io/MUK-TAKON/ding-36029.mp3');
   pixabayAudio.loop = true;
-  pixabayAudio.volume = 0.6;
+  pixabayAudio.volume = 0.7;
   pixabayAudio.play();
 
   // audio tambahan
@@ -395,13 +417,13 @@ async function showStickersSequential(){
     playTuing();
 
     setTimeout(()=>{ img.style.opacity='1'; },50);
-    await new Promise(r=>setTimeout(r,1000));
+    await new Promise(r=>setTimeout(r,400));
   }
 
   // fade out semua stiker
   document.querySelectorAll('img.random-sticker').forEach(img=>{
     img.style.opacity='0';
-    setTimeout(()=>img.remove(), 1000);
+    setTimeout(()=>img.remove(), 500);
   });
 
   // stop kedua audio
@@ -473,6 +495,7 @@ startBtn.addEventListener('keyup',(ev)=>{ if(ev.key==='Enter'||ev.keyCode===13) 
 </script>
 </body> 
 </html>
+
 
 
 
