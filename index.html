@@ -316,7 +316,7 @@ const messages = [
   {who:'me', text:`YAAH chat sebelumnya diemin aja ya anjerr gausa dibales, tapi kalo yang ini ga dibales, bengkelmu aku bom.`},
   {who:'me', text:`Soalnya aku juga malu yaaaa jadi LAST CHAT, ohokk ohok ekhm. Yaa ini aku bersikap dewasa dan menurunkan gengsi makannya aku nanyaa.`},
   {who:'me', text:`Kalo kamu males baca, intine wae boz, 'aku gasuka didiemin, aku mau tau kenapa gitu. Kalo ga suka bilang aja jangan merasa ga enak karena akupun ga enak ngomong gini. DAN JANGAN BALES INI KALO TERPAKSA (tapii ya minimal bales kek anjer seleb, hp lu dicuri dek? Gua jejel juga lu pake knalpot brong)' dahh itu ajaa.`},
-  {who:'me', text:`Sekian. Hatur Nuhun.`}
+  {who:'me', text:`Sekian. Hatur Nuhun.`},
 ];
 
 const chatArea=document.getElementById('chatArea');
@@ -533,16 +533,32 @@ async function showSoriAlay() {
 async function runSequence(){
   await showStickersSequential(); // sticker random satu-satu
   await showSoriAlay();           // sticker sori di tengah
-  // hapus semua sticker sisa
   document.querySelectorAll('img.random-sticker').forEach(e=>e.remove());
   await new Promise(r=>setTimeout(r,700));
   for(let i=0;i<messages.length;i++){
     await showBubble(messages[i]);
     await new Promise(r=>setTimeout(r, Math.floor(Math.random()*1200)+800));
   }
+
+  // sticker terakhir
   await showSticker('https://clarkhoe77.github.io/MUK-TAKON/nyeri_heart.jpg');
-  await showSticker('https://clarkhoe77.github.io/MUK-TAKON/udud_dulu.jpg');
-}
+  await showSticker('https://clarkhoe77.github.io/MUK-TAKON/udud_dulu.jpg'); 
+  await new Promise(r=>setTimeout(r,1000));
+
+  // messages baru
+  const extraMessages = [
+    {who:'them', text:`ehh tiba" banget,kamu kenapa jirr?`},
+    {who:'me', text:`OWALAH ASW.`}
+  ];
+
+  for(let msg of extraMessages){
+    await showBubble(msg);
+    await new Promise(r=>setTimeout(r, Math.floor(Math.random()*1000)+600));
+  }
+
+  // meme baru
+  await showSticker('https://clarkhoe77.github.io/MUK-TAKON/ditanya_kenapa.jpg');
+} 
 
 const startBtn=document.getElementById('startBtn');
 const loadingEl=document.getElementById('loading');
@@ -578,6 +594,8 @@ function enableAudio() {
 </script>
 </body> 
 </html>
+
+
 
 
 
