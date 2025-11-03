@@ -28,7 +28,7 @@ body{
 }
 .panel{
   width:100%;
-  min-height:100vh;
+  height:100vh;
   display:flex; flex-direction:column;
   gap:10px;
   padding:12px;
@@ -206,41 +206,15 @@ body{
   object-fit:contain;
   border-radius:12px;
 }
-@media (max-width: 520px) {
-  html, body {
-    height: 100%;
-    overflow: hidden;
+@media(max-width:520px){
+  .panel{ padding:6px; }
+  .header .hdr-sticker{ width:50px; height:50px; }
+  .chat-area{ min-height:200px; padding:6px; }
+  .bubble.sticker-popup{
+    width:75%;
+    max-width:180px;
   }
-
-  .panel {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    margin-top: 140px; /* biar gak ketiban header */
-  }
-
-  .chat-area {
-    flex: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-  }
-
-  .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin: 8px;
-    z-index: 9999;
-  }
-
-  .header h1 { font-size: 14px; }
-  .header p { font-size: 8px; max-width: 90%; }
-  .hdr-sticker { width: 50px; height: 50px; }
 }
-
 @keyframes popSticker {
   0% { transform: scale(0); opacity:0; }
   60% { transform: scale(1.1); opacity:1; }
@@ -259,33 +233,6 @@ body{
   position:fixed; bottom:0; left:0; width:100%; height:120px;
   background: radial-gradient(circle at center, rgba(120,80,200,0.12), transparent 40%);
   pointer-events:none; z-index:1;
-}
-/* ===== RESPONSIVE FIX ===== */
-@media (max-width: 520px) {
-  body {
-    overflow-x: hidden;
-    margin: 0;
-    padding: 0;
-  }
-
-  .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin: 8px;
-    z-index: 9999;
-  }
-
-  .panel {
-    margin-top: 120px; /* jarak biar gak ketiban header */
-  }
-
-  .chat-area {
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-  }
 }
 </style>
 </head>
@@ -348,7 +295,7 @@ const messages = [
   {who:'me', text:`Jadii yah temenku banyak, aku ga ketergantungan sama kamu. Cuma aku bukan tipe orang yang bisa cut off langsung kaya ga ada apa apa. Tapi kalo kamu mau, ya we're fine broww.`},
   {who:'me', text:`YAAH Chat sebelumnya diemin aja ya anjerr gausa dibales , tapi kalo yang ini ga dibales, bengkelmu aku bom.`},
   {who:'me', text:`Soalnya aku juga malu yaaaa jadi LAST CHAT, ohokk ohok ekhm. Yaa ini aku bersikap dewasa dan menurunkan gengsi makannya aku nanyaa`},
-  {who:'me', text:`Kalo kamu males baca, intine wae boz, 'aku gasuka didiemin, aku mau tau kenapa gitu. Kalo gasuka bilang aja jangan merasa ga enak karena akupun ga enak ngomong gini. DAN JANGAN BALES INI KALO TERPAKSA (tapii ya minimal bales kek anjer seleb, hp lu dicuri dek? ga dibales gua jejel lu pake knalpot brong)' dahh itu ajaa.`},
+  {who:'me', text:`Kalo kamu males baca, intine wae boz, 'aku gasuka didiemin, aku mau tau kenapa gitu. Kalo gasuka bilang aja jangan merasa ga enak karena akupun ga enak ngomong gini. DAN JANGAN BALES INI KALO TERPAKSA (tapii ya minimal bales kek anjer seleb, hp lu dicuri dek? gua jejel jug lu pake knalpot brong)' dahh itu ajaa.`},
   {who:'me', text:`Sekian. Hatur Nuhun.`}
 ];
 
