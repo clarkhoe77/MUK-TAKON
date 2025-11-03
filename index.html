@@ -353,12 +353,17 @@ async function showSticker(url) {
     bubble.className = 'bubble sticker-popup';
     const img = document.createElement('img');
     img.src = url;
+    img.alt = "Sticker";
     bubble.appendChild(img);
     chatArea.appendChild(bubble);
     playTuing();
-    chatArea.scrollTop = chatArea.scrollHeight;
-    signature.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    setTimeout(() => resolve(), 1200);
+    setTimeout(() => {
+      chatArea.scrollTop = chatArea.scrollHeight;
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      signature.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }, 100);
+
+    setTimeout(() => resolve(), 1300);
   });
 }
 
@@ -546,6 +551,7 @@ function enableAudio() {
 </script>
 </body> 
 </html>
+
 
 
 
