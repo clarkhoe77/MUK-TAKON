@@ -278,8 +278,8 @@ function playTuing(){
   const g=audioCtx.createGain(); 
   o.type='sine'; 
   o.frequency.setValueAtTime(1000,now); 
-  g.gain.setValueAtTime(0.003,now); 
-  g.gain.exponentialRampToValueAtTime(0.2,now+0.03); 
+  g.gain.setValueAtTime(0.004,now); 
+  g.gain.exponentialRampToValueAtTime(0.7,now+0.05); 
   g.gain.exponentialRampToValueAtTime(0.0001,now+0.35); 
   o.connect(g); 
   g.connect(audioCtx.destination); 
@@ -565,6 +565,7 @@ function enableAudio() {
 </script>
 </body> 
 </html>
+
 
 
 
