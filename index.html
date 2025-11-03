@@ -79,6 +79,10 @@ body{
   border-radius:8px;
   border:2px solid rgba(62,160,255,0.12);
   background: rgba(0,0,0,0.12);
+  white-space: normal; /* biar teks bisa turun ke bawah */
+  word-wrap: break-word; /* biar kata panjang tetep pecah */
+  max-width: 100%; /* batasi biar gak melebihi container */
+  text-align: left;
 }
 .header .hdr-sticker{
   width:120px; height:120px; border-radius:12px; overflow:hidden; flex-shrink:0;
@@ -207,6 +211,9 @@ body{
   border-radius:12px;
 }
 @media(max-width:520px){
+  @media(max-width:520px){
+  .header h1 { font-size: 14px; } 
+  .header p { font-size: 8px; max-width: 90%; } 
   .panel{ padding:6px; }
   .header .hdr-sticker{ width:50px; height:50px; }
   .chat-area{ min-height:200px; padding:6px; }
@@ -508,6 +515,7 @@ startBtn.addEventListener('keyup',(ev)=>{ if(ev.key==='Enter'||ev.keyCode===13) 
 </script>
 </body> 
 </html>
+
 
 
 
