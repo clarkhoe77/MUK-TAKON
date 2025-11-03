@@ -280,7 +280,7 @@ const messages = [
   {who:'me', text:`Ekhm EKHEM jadii, lonn aku mau ngomong sesuatu, tapi bukan karena aku mau ngedrama atau marah yaa.`},
   {who:'me', text:`Aku cuma ngerasa gak enak aja, kesannya kayak aku gak dihargain sebagai seonggok manusia, walaupun aslinya bidadari yahh.`},
   {who:'them', text:`hmmmm`},
-  {who:'me', text:`Yuyur gwa kesel. Soalnya ini tuh rasanya kayak orang disuapin makan tiap hari, terus tiba-tiba yang nyuruh ilang gitu aja. Yaa aneh aja.`},
+  {who:'me', text:`Yuyur gwa kesel. Soalnya ini tuh rasanya kayak orang dijejelin rokok tiap hari, eh pas udah addicted disuruh berenti sama yang jejelin tadi. Yaa aneh aja jir.`},
   {who:'me', text:`Bukan karena aku baper. Aku gak munafik, aku emang suka dan enjoy sama suasana yang kamu kasih. Bukan dalam hal cinta cintaan alay yaa, tapi aku ngerasa nyambung dan positif ngobrol sama kamu, kayak aku sama ralisha.`},
   {who:'them', text:`yakinnn deckk`},
   {who:'me', text:`Aku cuma pengen tau. Soalnya jujur aja, tiba-tiba ngilang gitu tuh bikin bingung. Kalau kamu gak nyaman, lagi ada masalah yang gabisa kamu omongin, atau ngerasa aku terlalu banyak ngomong, atau risih sama hal-hal yang aku lakuin (kurang ajarr tapi yaa bener juga sih), bilang aja gak papa.`},
@@ -511,9 +511,27 @@ startBtn.addEventListener('click',async function(){
 });
 
 startBtn.addEventListener('keyup',(ev)=>{ if(ev.key==='Enter'||ev.keyCode===13) startBtn.click(); });
+
+  // audio aktif di mobile setelah user pertama kali tap
+document.body.addEventListener('touchstart', enableAudio, { once: true });
+document.body.addEventListener('click', enableAudio, { once: true });
+
+function enableAudio() {
+  // izin AudioContext
+  if (typeof audioCtx !== 'undefined' && audioCtx.state === 'suspended') {
+    audioCtx.resume().then(() => {
+      console.log('🔊 AudioContext diaktifkan di mobile');
+    });
+  }
+  const audios = document.querySelectorAll('audio');
+  audios.forEach(a => {
+    a.play().then(() => a.pause()).catch(() => {});
+  });
+}
 </script>
 </body> 
 </html>
+
 
 
 
