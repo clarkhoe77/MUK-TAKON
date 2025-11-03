@@ -271,7 +271,21 @@ body{
 let audioCtx=null;
 function initAudio(){ if(audioCtx) return; audioCtx=new (window.AudioContext||window.webkitAudioContext)(); }
 function playClick(time=0){ if(!audioCtx) initAudio(); const now=audioCtx.currentTime+time; const o=audioCtx.createOscillator(); const g=audioCtx.createGain(); o.type='square'; o.frequency.setValueAtTime(1200,now); g.gain.setValueAtTime(0.0001,now); g.gain.exponentialRampToValueAtTime(0.06,now+0.001); g.gain.exponentialRampToValueAtTime(0.0001,now+0.09); o.connect(g); g.connect(audioCtx.destination); o.start(now); o.stop(now+0.11); }
-function playTuing(){ if(!audioCtx) initAudio(); const now=audioCtx.currentTime; const o=audioCtx.createOscillator(); const g=audioCtx.createGain(); o.type='sine'; o.frequency.setValueAtTime(1000,now); g.gain.setValueAtTime(0.001,now); g.gain.exponentialRampToValueAtTime(0.12,now+0.02); g.gain.exponentialRampToValueAtTime(0.0001,now+0.35); o.connect(g); g.connect(audioCtx.destination); o.start(now); o.stop(now+0.38); }
+function playTuing(){ 
+  if(!audioCtx) initAudio(); 
+  const now=audioCtx.currentTime; 
+  const o=audioCtx.createOscillator(); 
+  const g=audioCtx.createGain(); 
+  o.type='sine'; 
+  o.frequency.setValueAtTime(1000,now); 
+  g.gain.setValueAtTime(0.003,now); 
+  g.gain.exponentialRampToValueAtTime(0.2,now+0.03); 
+  g.gain.exponentialRampToValueAtTime(0.0001,now+0.35); 
+  o.connect(g); 
+  g.connect(audioCtx.destination); 
+  o.start(now); 
+  o.stop(now+0.38); 
+}
 
 // ===== messages =====
 const messages = [
@@ -551,6 +565,7 @@ function enableAudio() {
 </script>
 </body> 
 </html>
+
 
 
 
