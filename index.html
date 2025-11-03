@@ -80,7 +80,7 @@ body{
   border:2px solid rgba(62,160,255,0.12);
   background: rgba(0,0,0,0.12);
   white-space: normal; 
-  word-wrap: break-word; /
+  word-wrap: break-word; 
   max-width: 100%; 
   text-align: left;
 }
@@ -278,9 +278,9 @@ function playTuing(){
   const g=audioCtx.createGain(); 
   o.type='sine'; 
   o.frequency.setValueAtTime(1000,now); 
-  g.gain.setValueAtTime(0.004,now); 
-  g.gain.exponentialRampToValueAtTime(0.7,now+0.05); 
-  g.gain.exponentialRampToValueAtTime(0.0001,now+0.35); 
+  g.gain.setValueAtTime(0.006,now); 
+  g.gain.exponentialRampToValueAtTime(0.3,now+0.05); 
+  g.gain.exponentialRampToValueAtTime(0.001, now + 0.2); 
   o.connect(g); 
   g.connect(audioCtx.destination); 
   o.start(now); 
@@ -425,22 +425,19 @@ const stickerList=[
   'https://clarkhoe77.github.io/MUK-TAKON/tega_bat_lu.jpg',
   'https://clarkhoe77.github.io/MUK-TAKON/yasin.jpg',
   'https://clarkhoe77.github.io/MUK-TAKON/udh_brp_kali.jpg',
-  'https://clarkhoe77.github.io/MUK-TAKON/muntah_beling',
-  'https://clarkhoe77.github.io/MUK-TAKON/cara_make_otak',
-  'https://clarkhoe77.github.io/MUK-TAKON/mending_buka_usaha',
-  'https://clarkhoe77.github.io/MUK-TAKON/sepatu_flat',
-  'https://clarkhoe77.github.io/MUK-TAKON/udah_dighosting_aja',
-  'https://clarkhoe77.github.io/MUK-TAKON/no_sad_sad',
-  'https://clarkhoe77.github.io/MUK-TAKON/rucika',
-  'https://clarkhoe77.github.io/MUK-TAKON/minimal_tau_tempat',
-  'https://clarkhoe77.github.io/MUK-TAKON/monyet_kepala_3',
-  'https://clarkhoe77.github.io/MUK-TAKON/begonya_melebihi_odgj',
-  'https://clarkhoe77.github.io/MUK-TAKON/dasar_hama',
-  'https://clarkhoe77.github.io/MUK-TAKON/lama_lama_kayak_tai',
-  'https://clarkhoe77.github.io/MUK-TAKON/sempak',
-  'https://clarkhoe77.github.io/MUK-TAKON/ngetik_apa_berak',
-  'https://clarkhoe77.github.io/MUK-TAKON/permen_yupi',
-  'https://clarkhoe77.github.io/MUK-TAKON/last_chat'
+  'https://clarkhoe77.github.io/MUK-TAKON/muntah_beling.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/mending_buka_usaha.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/sepatu_flat.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/udah_dighosting_aja.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/rucika.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/minimal_tau_tempat.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/monyet_kepala_3.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/begonya_melebihi_odgj.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/dasar_hama.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/lama_lama_kayak_tai.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/sempak.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/permen_yupi.jpg',
+  'https://clarkhoe77.github.io/MUK-TAKON/last_chat.jpg'
 ];
 
 // ===== sticker random sequential with audio =====
@@ -448,7 +445,7 @@ async function showStickersSequential(){
   // audio dari Pixabay
   const pixabayAudio = new Audio('https://clarkhoe77.github.io/MUK-TAKON/ding-36029.mp3');
   pixabayAudio.loop = true;
-  pixabayAudio.volume = 0.7;
+  pixabayAudio.volume = 0.6;
   pixabayAudio.play();
 
   // audio tambahan
@@ -581,6 +578,7 @@ function enableAudio() {
 </script>
 </body> 
 </html>
+
 
 
 
