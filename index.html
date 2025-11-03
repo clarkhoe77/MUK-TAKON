@@ -28,7 +28,7 @@ body{
 }
 .panel{
   width:100%;
-  height:100vh;
+  min-height:100vh;
   display:flex; flex-direction:column;
   gap:10px;
   padding:12px;
@@ -37,29 +37,24 @@ body{
   width: 95%;
   max-width: 700px;
   margin: auto;
-  padding: 100px 12px 24px; /* biar gak ketiban header */
-  color: white;
+  padding: 100px 12px 24px; 
   z-index: 1;
 }
+
 @media(max-width:520px){
   .container {
-    padding-top: 110px; /* biar di HP ada jarak tambahan */
+    padding-top: 110px; 
   }
 }
 .header{
-  display:flex; 
-  align-items:center; 
-  justify-content:space-between;
-  padding:12px;
-  border:2px solid #fff;
-  border-radius:12px;
-  background: linear-gradient(to right, #3ea0ff, #39ff94);
-  position: fixed; 
-  top: 0;
-  left: 0;
-  right: 0;
-  margin: 8px; 
-  z-index: 9999; 
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px;
+  border-radius:20px;
+  border:3px solid rgba(102,208,255,0.14);
+  background: linear-gradient(90deg, rgba(62,160,255,0.08), rgba(255, 110, 199, 0.05));
+  box-shadow: var(--soft-glow);
+  backdrop-filter: blur(4px);
+  position:relative;
 }
 .header .left{
   display:flex; flex-direction:column; gap:6px;
@@ -84,10 +79,6 @@ body{
   border-radius:8px;
   border:2px solid rgba(62,160,255,0.12);
   background: rgba(0,0,0,0.12);
-  white-space: normal; 
-  word-wrap: break-word; 
-  max-width: 100%; 
-  text-align: left;
 }
 .header .hdr-sticker{
   width:120px; height:120px; border-radius:12px; overflow:hidden; flex-shrink:0;
@@ -215,15 +206,41 @@ body{
   object-fit:contain;
   border-radius:12px;
 }
-@media(max-width:520px){
-  .panel{ padding:6px; }
-  .header .hdr-sticker{ width:50px; height:50px; }
-  .chat-area{ min-height:200px; padding:6px; }
-  .bubble.sticker-popup{
-    width:75%;
-    max-width:180px;
+@media (max-width: 520px) {
+  html, body {
+    height: 100%;
+    overflow: hidden;
   }
+
+  .panel {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin-top: 140px; /* biar gak ketiban header */
+  }
+
+  .chat-area {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 8px;
+    z-index: 9999;
+  }
+
+  .header h1 { font-size: 14px; }
+  .header p { font-size: 8px; max-width: 90%; }
+  .hdr-sticker { width: 50px; height: 50px; }
 }
+
 @keyframes popSticker {
   0% { transform: scale(0); opacity:0; }
   60% { transform: scale(1.1); opacity:1; }
@@ -243,10 +260,36 @@ body{
   background: radial-gradient(circle at center, rgba(120,80,200,0.12), transparent 40%);
   pointer-events:none; z-index:1;
 }
+/* ===== RESPONSIVE FIX ===== */
+@media (max-width: 520px) {
+  body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 8px;
+    z-index: 9999;
+  }
+
+  .panel {
+    margin-top: 120px; /* jarak biar gak ketiban header */
+  }
+
+  .chat-area {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+}
 </style>
 </head>
 <body>
-<div class="container">
 <div class="panel">
   <div class="header" id="header">
     <div class="left">
@@ -305,7 +348,7 @@ const messages = [
   {who:'me', text:`Jadii yah temenku banyak, aku ga ketergantungan sama kamu. Cuma aku bukan tipe orang yang bisa cut off langsung kaya ga ada apa apa. Tapi kalo kamu mau, ya we're fine broww.`},
   {who:'me', text:`YAAH Chat sebelumnya diemin aja ya anjerr gausa dibales , tapi kalo yang ini ga dibales, bengkelmu aku bom.`},
   {who:'me', text:`Soalnya aku juga malu yaaaa jadi LAST CHAT, ohokk ohok ekhm. Yaa ini aku bersikap dewasa dan menurunkan gengsi makannya aku nanyaa`},
-  {who:'me', text:`Kalo kamu males baca, intine wae boz, 'aku gasuka didiemin, aku mau tau kenapa gitu. Kalo gasuka bilang aja jangan merasa ga enak karena akupun ga enak ngomong gini. DAN JANGAN BALES INI KALO TERPAKSA (tapii ya minimal bales kek anjer seleb, hp lu dicuri dek? gua jejel juga lu pake knalpot brong)' dahh itu ajaa.`},
+  {who:'me', text:`Kalo kamu males baca, intine wae boz, 'aku gasuka didiemin, aku mau tau kenapa gitu. Kalo gasuka bilang aja jangan merasa ga enak karena akupun ga enak ngomong gini. DAN JANGAN BALES INI KALO TERPAKSA (tapii ya minimal bales kek anjer seleb, hp lu dicuri dek? ga dibales gua jejel lu pake knalpot brong)' dahh itu ajaa.`},
   {who:'me', text:`Sekian. Hatur Nuhun.`}
 ];
 
@@ -440,13 +483,13 @@ async function showStickersSequential(){
     playTuing();
 
     setTimeout(()=>{ img.style.opacity='1'; },50);
-    await new Promise(r=>setTimeout(r,500));
+    await new Promise(r=>setTimeout(r,400));
   }
 
   // fade out semua stiker
   document.querySelectorAll('img.random-sticker').forEach(img=>{
     img.style.opacity='0';
-    setTimeout(()=>img.remove(), 700);
+    setTimeout(()=>img.remove(), 500);
   });
 
   // stop kedua audio
